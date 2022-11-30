@@ -14,6 +14,7 @@
     "require": {
         "phpmailer/phpmailer": "^6.6",
         "twig/twig": "^3.4",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+      "ext-pdo": "*"
     }
 }

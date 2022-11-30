@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff0f4831-9e1b-41d4-9112-018acc99f017" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Controllers/PostController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Db.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Models/BaseEntity.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Models/Post.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Models/PostRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Models/Repository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Views/posts/add.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/default.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/default.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +41,10 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
     </include_path>
   </component>
   <component name="ProjectId" id="2HufvCedQuiMN4G3gGmUUOdn6UW" />
@@ -77,6 +90,7 @@
       <workItem from="1669461345735" duration="7547000" />
       <workItem from="1669474814211" duration="9985000" />
       <workItem from="1669557457842" duration="5976000" />
+      <workItem from="1669744636419" duration="7434000" />
     </task>
     <servers />
   </component>
