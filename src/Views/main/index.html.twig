@@ -1,0 +1,268 @@
+{% extends "default.html.twig" %}
+
+{% block body %}
+    <main>
+        <section id="hero">
+            <div class="container col-xxl-8 px-4 py-5">
+                <div class="row flex-lg-row-reverse align-items-center g-5">
+                    <div class="col-10 col-sm-8 col-lg-6 d-flex align-items-center">
+                        <img src="/img/hero/profil.png" class="d-block mx-lg-auto img-fluid" alt="Photo version animé du propriétaire du site" loading="lazy">
+                    </div>
+                    <div class="col-lg-6">
+                        <h1 class="display-5 fw-bold lh-1 mb-3">Brian Thiely, </br>Developer <strong
+                                    class="text-warning">PHP</strong></h1>
+                        <p class="lead">An IT project, no matter how big or small, deserves impeccable code quality and fast flexibility.
+                            but above all uncompromising security. By having a Dev-SecOps oriented work methodology your code becomes safer and faster to deploy.
+                            My objective ? Offer you quality and serenity
+                        </p>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <a href="#contact">
+                                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Contact me</button>
+                            </a>
+                            <a href="#CV">
+                                <button type="button" class="btn btn-outline-warning btn-lg px-4">My experiences</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h2 class="display-6 fw-bold">My <strong class="text-warning">projects</strong></h2>
+                    <p class="lead text-muted">Discover all my projects carried out since the beginning of my career. You can access the sites as well as the source code
+                    </p>
+                    <p>
+                        <a href="#contact" class="btn btn-primary my-2">Contact me</a>
+                        <a href="#CV" class="btn btn-outline-warning my-2">My experiences</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="Portfolio">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="mx-auto">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        <title>Reservia</title>
+                                        <image href="\img\portfolio\Reservia.svg" width="100%" height="100%" />
+                                    </svg>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text mb-4">
+                                        <strong>
+                                            Transformer un modèle en site responsive. </br>
+                                        </strong>
+                                        - Intégrer du contenu selon une maquette. </br>
+                                        - Implémenter une interface responsive.
+                                    </p>
+                                    <div class="d-flex justify-content-evenly">
+                                        <a href="https://brianthiely.github.io/mockup_Reservia/" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-outline-warning ">Voir le site</button>
+                                        </a>
+                                        <a href="https://github.com/brianthiely/mockup_Reservia" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-primary">Code source</button>
+                                        </a>
+                                    </div>
+                                    <strong>
+                                        <small class="text-muted d-flex justify-content-center mt-3">HTML,CSS</small>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="card shadow-sm ">
+                                <div class="mx-auto">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        <title>OhMyFood</title>
+                                        <image href="\img\portfolio\ohmyfood@2x.svg" width="100%" height="100%" />
+                                    </svg>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text mb-4">
+                                        <strong>
+                                            Construire des animations. </br>
+                                        </strong>
+                                        - Assurer la cohérence graphique. </br>
+                                        - Implémenter des graphiques avancés.
+                                    </p>
+                                    <div class="d-flex justify-content-evenly">
+                                        <a href="https://brianthiely.github.io/Css_animations_OhmyFood/" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-outline-warning ">Voir le site</button>
+                                        </a>
+                                        <a href="https://github.com/brianthiely/Css_animations_OhmyFood" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-primary">Code source</button>
+                                        </a>
+                                    </div>
+                                    <strong>
+                                        <small class="text-muted d-flex justify-content-center mt-3">HTML,SCSS</small>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="card shadow-sm ">
+                                <div class="mx-auto ">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        <title>La Chouette Agence</title>
+                                        <image href="\img\portfolio\ChouetteAgence.png" width="100%" height="100%" />
+                                    </svg>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text mb-4">
+                                        <strong>
+                                            Optimiser un site web. </br>
+                                        </strong>
+                                        - Optimiser la taille et la vitesse. </br>
+                                        - SEO et accesibilités.
+                                    </p>
+                                    <div class="d-flex justify-content-evenly">
+                                        <a href="https://brianthiely.github.io/AFTER_seo_accessibility/" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-outline-warning ">Voir le site</button>
+                                        </a>
+                                        <a href="https://github.com/brianthiely/AFTER_seo_accessibility" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-primary">Code source</button>
+                                        </a>
+                                    </div>
+                                    <strong>
+                                        <small class="text-muted d-flex justify-content-center mt-3">HTML,CSS</small>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="card shadow-sm ">
+                                <div class="mx-auto ">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        <title>Orinoco</title>
+                                        <image href="\img\portfolio\orinoco.svg" width="100%" height="100%" />
+                                    </svg>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text mb-4">
+                                        <strong>
+                                            E-commerce. </br>
+                                        </strong>
+                                        - Créer un plan de test. </br>
+                                        - Interagir avec une API.
+                                    </p>
+                                    <div class="d-flex justify-content-evenly">
+                                        <a href="https://brianthiely.github.io/e-commerce_Orinoco/" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-outline-warning ">Voir le site</button>
+                                        </a>
+                                        <a href="https://github.com/brianthiely/e-commerce_Orinoco" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-primary">Code source</button>
+                                        </a>
+                                    </div>
+                                    <strong>
+                                        <small class="text-muted d-flex justify-content-center mt-3">Javascript</small>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="card shadow-sm ">
+                                <div class="mx-auto ">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        <title>Hot-Takes</title>
+                                        <image href="\img\portfolio\hot-takes.png" width="100%" height="100%" />
+                                    </svg>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text mb-4">
+                                        <strong>
+                                            API sécurisée. </br>
+                                        </strong>
+                                        - Sécuriser les opérations CRUD. </br>
+                                        - Sécuriser les données utilisateurs.
+                                    </p>
+                                    <div class="d-flex justify-content-evenly">
+                                        <a href="https://hot-takes-oc.netlify.app/login" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-outline-warning ">Voir le site</button>
+                                        </a>
+                                        <a href="https://github.com/brianthiely/API_REST_Piquante" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-primary">Code source</button>
+                                        </a>
+                                    </div>
+                                    <strong>
+                                        <small class="text-muted d-flex justify-content-center mt-3">Javascript</small>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="card shadow-sm ">
+                                <div class="mx-auto ">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        <title>Groupomania</title>
+                                        <image href="\img\portfolio\Groupomania.svg" width="100%" height="100%" />
+                                    </svg>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text mb-4">
+                                        <strong>
+                                            Réseau social. </br>
+                                        </strong>
+                                        - Sécuriser les sessions utilisateurs. </br>
+                                        - Developpement fullstack.
+                                    </p>
+                                    <div class="d-flex justify-content-evenly">
+                                        <a href="https://github.com/brianthiely/social_network_Groupomania" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-outline-warning ">Voir le site</button>
+                                        </a>
+                                        <a href="https://github.com/brianthiely/social_network_Groupomania" target="_blank" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-sm btn-primary">Code source</button>
+                                        </a>
+                                    </div>
+                                    <strong>
+                                        <small class="text-muted d-flex justify-content-center mt-3">Javascript, VueJs</small>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="CV">
+            <div class="px-4 py-5 my-5 text-center">
+                <h2 class="display-6 fw-bold">My CV</h2>
+                <div class="col-lg-6 mx-auto">
+                    <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <a href="\img\cv\CV-Brian-Thiely.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-lg btn-primary">
+                            Look the CV
+                        </a>
+                        <a href="#contact">
+                            <button type="button" class="btn btn-outline-warning btn-lg px-4">Contact me</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-5" id="contact">
+            <h2 class="text-center display-6 fw-bold">Contact me</h2>
+            {{ contactForm | raw }}
+        </section>
+    </main>
+{% endblock %}
