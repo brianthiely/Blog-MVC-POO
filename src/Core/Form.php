@@ -17,6 +17,14 @@ class Form
     }
 
     /**
+     * @return bool
+     */
+    public function isSubmitted(): bool
+    {
+        return !empty($_POST);
+    }
+
+    /**
      * Validate if all the fields proposed are filled
      * @param array $form Form table (_$POST, $_GET)
      * @param array $fields Array listing the mandatory fields
