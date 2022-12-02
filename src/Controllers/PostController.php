@@ -6,10 +6,25 @@ namespace App\Controllers;
 use App\Core\Form;
 use App\Models\Post;
 use App\Models\PostRepository;
+use App\Models\PostsRepository;
 use Exception;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class PostController extends Controller
 {
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
+    public function index()
+    {
+        $posts = (new PostRepository())->getPosts();
+        $this->twig->display('post/index.html.twig', compact('posts'));
+    }
+
     /**
      * @throws Exception
      */

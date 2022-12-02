@@ -5,5 +5,8 @@ namespace App\Models;
 
 class PostRepository extends Repository
 {
-
+    public function getPosts(): array
+    {
+        return $this->fetchAll();
+    }
 }
