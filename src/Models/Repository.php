@@ -61,5 +61,13 @@ class Repository extends BaseEntity
         return $this->request("INSERT INTO $table ($fields_list) VALUES ($values_list)", $properties);
     }
 
-
+    /**
+     * @return array
+     */
+    public function fetchAll(): array
+    {
+        $table = $this->getTable();
+        $stmt = $this->request("SELECT *, DATE_FORMAT(createdAt, '%d/%m/%Y à %Hh%i') AS created_fr, DATE_FORMAT(updatedAt, '%d/%m/%Y à %Hh%i') AS updated_fr FROM $table ORDER BY createdAt DESC");
+        return $stmt->fetchAll();
+    }
 }
