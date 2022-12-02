@@ -10,6 +10,14 @@ use App\Globals\_SESSION;
 class AddPostForm extends Form
 {
     private string $errors;
+    private _POST  $post;
+    private _SESSION $session;
+
+    public function __construct(_POST $post, _SESSION $session)
+    {
+        $this->post = $post;
+        $this->session = $session;
+    }
 
     /**
      * @return string
@@ -21,22 +29,21 @@ class AddPostForm extends Form
             ->addInput('text', 'title', [
                 'id' => 'title',
                 'class' => 'form-control',
-                'value' => _POST::_POST('title') ?? ''
+                'value' => $this->post->_POST('title')
 
             ])
             ->addLabelFor('author', 'Auteur :')
             ->addInput('text', 'author', [
                 'id' => 'author',
-                'class' => 'form-control',
-                'value' => _POST::_POST('author') ?? _SESSION::getSession('username'),
+                'class' => 'form-control', 'value' => $this->post->_POST('author') ?? $this->session->setSession('user', 'username')
             ])
             ->addLabelFor('chapo', 'Chap :')
-            ->addTextArea('chapo', _POST::_POST('chapo'), [
+            ->addTextArea('chapo', $this->post->_POST('chapo'), [
                 'id' => 'chapo',
                 'class' => 'form-control',
             ])
             ->addLabelFor('content', 'Content :')
-            ->addTextArea('content', _POST::_POST('content'), [
+            ->addTextArea('content', $this->post->_POST('content'), [
                 'id' => 'content',
                 'class' => 'form-control',
             ])
@@ -66,10 +73,10 @@ class AddPostForm extends Form
     public function getData(): array
     {
         return [
-            'title' => _POST::_POST('title'),
-            'author' => _POST::_POST('author'),
-            'chapo' => _POST::_POST('chapo'),
-            'content' => _POST::_POST('content'),
+            'title' => $this->post->_POST('title'),
+            'author' => $this->post->_POST('author'),
+            'chapo' => $this->post->_POST('chapo'),
+            'content' => $this->post->_POST('content'),
         ];
     }
 

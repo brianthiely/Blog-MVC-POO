@@ -4,6 +4,7 @@ namespace App\Globals;
 
 class _POST
 {
+
     /**
      * @param string $key
      * @return string
