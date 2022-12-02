@@ -11,6 +11,12 @@ use App\Globals\_POST;
 class ContactForm extends Form
 {
     private string $errors;
+    private _POST  $post;
+
+    public function __construct(_POST $post)
+    {
+        $this->post = $post;
+    }
 
     /**
      * @return string
@@ -22,21 +28,21 @@ class ContactForm extends Form
             ->addInput('text', 'name', [
                 'id' => 'name',
                 'class' => 'form-control',
-                'value' => _POST::_POST('name')
+                'value' => $this->post->_POST('name')
             ])
             ->addLabelFor('mail', 'E-mail :')
             ->addInput('text', 'mail', [
                 'id' => 'mail',
                 'class' => 'form-control',
-                'value' => _POST::_POST('mail')
+                'value' => $this->post->_POST('mail')
             ])
             ->addLabelFor('phone', 'Telephone :')
-            ->addTextArea('phone', _POST::_POST('phone'), [
+            ->addTextArea('phone', $this->post->_POST('phone') , [
                 'id' => 'chapo',
                 'class' => 'form-control',
             ])
             ->addLabelFor('message', 'Message :')
-            ->addTextArea('message', _POST::_POST('message'), [
+            ->addTextArea('message', $this->post->_POST('message') , [
                 'id' => 'content',
                 'class' => 'form-control',
             ])
@@ -44,7 +50,6 @@ class ContactForm extends Form
                 'class' => 'btn btn-primary w-100 mt-3'
             ])
             ->endForm();
-
         return $this->create();
     }
 
@@ -65,7 +70,7 @@ class ContactForm extends Form
      */
     public function isValidEmail(): bool
     {
-        if (!filter_var(_POST::_POST('mail'), FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->post->_POST('mail'), FILTER_VALIDATE_EMAIL)) {
             $this->errors = 'The email is not valid';
         }
         return empty($this->errors);
@@ -77,7 +82,7 @@ class ContactForm extends Form
      */
     public function isPhoneValid(): bool|int
     {
-        if (!preg_match('/^[0-9]{10}$/', _POST::_POST('phone'))) {
+        if (!preg_match('/^[0-9]{10}$/', $this->post->_POST('phone'))) {
             $this->errors = 'The phone number is not valid';
         }
         return empty($this->errors);
@@ -90,10 +95,10 @@ class ContactForm extends Form
     {
         $mailer = new Mailer();
         $mailer->send(
-            'Nouveau message de ' . _POST::_POST('name'),
-            'Nom : ' . _POST::_POST('name') . '<br>' . 'Email : ' . _POST::_POST('mail') . '<br>' . 'Telephone : ' .
-            _POST::_POST('phone') . '<br>' .
-            'Message : ' . _POST::_POST('message'),
+            'Nouveau message de ' . $this->post->_POST('name'),
+            'Nom : ' . $this->post->_POST('name') . '<br>' . 'Email : ' . $this->post->_POST('mail') . '<br>' . 'Telephone : ' .
+            $this->post->_POST('phone') . '<br>' .
+            'Message : ' . $this->post->_POST('mail'),
         );
     }
 
