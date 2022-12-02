@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Globals\_SESSION;
 use PHPMailer\PHPMailer\Exception;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -28,18 +29,15 @@ class MainController extends Controller
                     // Check if phone number is valid
                     if ($contactForm->isPhoneValid()) {
                         $contactForm->sendForm();
-                        // Redirect to the home page
-                         header('Location: /');
-                    } else {
-                        // display the errors
-                        $_SESSION['error'] = "The number isn't valid";
+                        $this->redirect('/');
                     }
-                } else {
-                    $_SESSION['error'] = "The email isn't valid";
+                        _SESSION::setSession('errors', $contactForm->getErrors());
+
                 }
-            } else {
-                $_SESSION['error'] = "The form isn't complete";
+                    _SESSION::setSession('errors', $contactForm->getErrors());
+
             }
+                _SESSION::setSession('errors', $contactForm->getErrors());
         }
         try {
             $this->twig->display('main/index.html.twig', [
@@ -48,4 +46,5 @@ class MainController extends Controller
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
         }
     }
+
 }
