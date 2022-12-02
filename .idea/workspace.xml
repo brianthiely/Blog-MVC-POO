@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff0f4831-9e1b-41d4-9112-018acc99f017" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Views/post/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/AddPostForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Globals/_GET.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Globals/_POST.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Globals/_SESSION.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/MainController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/PostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/PostRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Repository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Repository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Db.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Db.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Form.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ContactForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ContactForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/default.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/default.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/main/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/post/add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/post/add.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

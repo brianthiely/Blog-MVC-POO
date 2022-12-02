@@ -6,44 +6,43 @@ namespace App\Form;
 use App\Core\Form;
 use App\Mailer\Mailer;
 use PHPMailer\PHPMailer\Exception;
+use App\Globals\_POST;
 
 class ContactForm extends Form
 {
+    private string $errors;
+
     /**
      * @return string
      */
     public function getForm(): string
     {
         $this->startForm()
-            ->openDiv([
-                'class' => 'w-75 m-auto'
-            ])
             ->addLabelFor('name', 'Nom')
             ->addInput('text', 'name', [
                 'id' => 'name',
                 'class' => 'form-control',
-                'value' => strip_tags($_POST['name'] ?? '')
+                'value' => _POST::_POST('name')
             ])
             ->addLabelFor('mail', 'E-mail :')
             ->addInput('text', 'mail', [
                 'id' => 'mail',
                 'class' => 'form-control',
-                'value' => strip_tags($_POST['mail'] ?? '')
+                'value' => _POST::_POST('mail')
             ])
-            ->addLabelFor('phone', 'Téléphone :')
-            ->addTextArea('phone', strip_tags($_POST['phone'] ?? ''), [
+            ->addLabelFor('phone', 'Telephone :')
+            ->addTextArea('phone', _POST::_POST('phone'), [
                 'id' => 'chapo',
                 'class' => 'form-control',
             ])
             ->addLabelFor('message', 'Message :')
-            ->addTextArea('message', strip_tags($_POST['message'] ?? ''), [
+            ->addTextArea('message', _POST::_POST('message'), [
                 'id' => 'content',
                 'class' => 'form-control',
             ])
             ->addButton('Envoyer', [
                 'class' => 'btn btn-primary w-100 mt-3'
             ])
-            ->closeDiv()
             ->endForm();
 
         return $this->create();
@@ -54,36 +53,34 @@ class ContactForm extends Form
      */
     public function isComplete(): bool
     {
-        return $this->validate($_POST, ['name', 'mail', 'phone', 'message']);
+        if (!Form::validate($_POST, ['name', 'mail', 'phone', 'message'])) {
+            $this->errors = 'The form is not complete';
+            return false;
+        }
+        return true;
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function isValidEmail(): string
+    public function isValidEmail(): bool
     {
-        return filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL);
+        if (!filter_var(_POST::_POST('mail'), FILTER_VALIDATE_EMAIL)) {
+            $this->errors = 'The email is not valid';
+        }
+        return empty($this->errors);
     }
+
 
     /**
      * @return bool|int
      */
     public function isPhoneValid(): bool|int
     {
-        return preg_match('/^0[1-9]([-. ]?[0-9]{2}){4}$/', $_POST['phone']);
-    }
-
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return [
-            'name' => $_POST['name'],
-            'mail' => $_POST['mail'],
-            'phone' => $_POST['phone'],
-            'message' => $_POST['message']
-        ];
+        if (!preg_match('/^[0-9]{10}$/', _POST::_POST('phone'))) {
+            $this->errors = 'The phone number is not valid';
+        }
+        return empty($this->errors);
     }
 
     /**
@@ -92,10 +89,20 @@ class ContactForm extends Form
     public function sendForm(): void
     {
         $mailer = new Mailer();
-        $data = $this->getData();
         $mailer->send(
-            'Nouveau message de ' . $data['name'],
-            'Nom : ' . $data['name'] . '<br>' . 'Email : ' . $data['mail'] . '<br>' . 'Telephone : ' . $data['phone'] . '<br>' . 'Message : ' . $data['message'],
+            'Nouveau message de ' . _POST::_POST('name'),
+            'Nom : ' . _POST::_POST('name') . '<br>' . 'Email : ' . _POST::_POST('mail') . '<br>' . 'Telephone : ' .
+            _POST::_POST('phone') . '<br>' .
+            'Message : ' . _POST::_POST('message'),
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getErrors(): string
+    {
+        return $this->errors ?? '';
+    }
+
 }

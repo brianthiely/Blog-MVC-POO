@@ -164,27 +164,4 @@ class Form
         $this->formCode .= ">$text</button>";
         return $this;
     }
-
-    /**
-     * Add a div to the form
-     * @param array $attributes
-     * @return $this
-     */
-    public function openDiv(array $attributes = []): self
-    {
-        $this->formCode .= '<div';
-        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' : '>';
-        return $this;
-    }
-
-
-    /**
-     * close a div to the form
-     * @return $this
-     */
-    public function closeDiv(): self
-    {
-        $this->formCode .= '</div>';
-        return $this;
-    }
 }
