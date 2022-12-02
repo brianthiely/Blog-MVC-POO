@@ -4,21 +4,34 @@ declare(strict_types=1);
 namespace App\Core;
 
 use App\Controllers\MainController;
+use App\Globals\_GET;
+use App\Globals\_SERVER;
+use PHPMailer\PHPMailer\Exception;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 class Main
 {
+    private _SERVER $server;
+    private _GET $get;
+
+    public function __construct()
+    {
+        $this->server = new _SERVER();
+        $this->get = new _GET();
+    }
+
     /**
      * Main router
      * @return void
+     * @throws Exception
      */
     public function start(): void
     {
         session_start();
 
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri = $this->server->getUri();
 
         // We clean the url to avoid duplicate content
         if (!empty($uri) && $uri != '/' && $uri[-1] == '/') {
@@ -30,8 +43,8 @@ class Main
         // We manage the url parameters
         // p=controller/method/params
         $params = [];
-        if(isset($_GET['p']))
-            $params = explode('/', $_GET['p']);
+        if($this->get->_GET('p') !== null) {
+            $params = explode('/', $this->get->_GET('p'));
 
         if($params[0] !== "") {
             // We retrieve the controller to instantiate
@@ -47,18 +60,18 @@ class Main
                 (isset($params[0])) ? call_user_func_array(
                     [$controller, $action],
                     $params
-                ) :
-                    $controller->$action();
-            } else{
+                ) : $controller->$action();
+            }
                 http_response_code(404);
                 echo "This page doesn't exist";
-            }
-        } else {
+
+        }
             // No parameter we return the default controller
             $controller = new MainController;
             try {
                 $controller->index();
             } catch (LoaderError|RuntimeError|SyntaxError $e) {
+                throw new Exception($e->getMessage());
             }
         }
     }

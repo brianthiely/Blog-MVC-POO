@@ -21,4 +21,5 @@ class _GET
     {
         return isset($_GET[$key]);
     }
+
 }
