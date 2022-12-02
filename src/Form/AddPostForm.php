@@ -13,10 +13,11 @@ class AddPostForm extends Form
     private _POST  $post;
     private _SESSION $session;
 
-    public function __construct(_POST $post, _SESSION $session)
+
+    public function __construct()
     {
-        $this->post = $post;
-        $this->session = $session;
+        $this->post = new _POST();
+        $this->session = new _SESSION();
     }
 
     /**

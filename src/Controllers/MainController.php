@@ -12,6 +12,15 @@ use App\Form\ContactForm;
 
 class MainController extends Controller
 {
+    private _SESSION $session;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->session = new _SESSION();
+    }
+
+
     /**
      * @return void
      * @throws Exception
@@ -31,19 +40,18 @@ class MainController extends Controller
                         $contactForm->sendForm();
                         $this->redirect('/');
                     }
-                        _SESSION::setSession('errors', $contactForm->getErrors());
-
+                    $this->session->setSession('errors', $contactForm->getErrors());
                 }
-                    _SESSION::setSession('errors', $contactForm->getErrors());
-
+                $this->session->setSession('errors', $contactForm->getErrors());
             }
-                _SESSION::setSession('errors', $contactForm->getErrors());
+            $this->session->setSession('errors', $contactForm->getErrors());
         }
         try {
             $this->twig->display('main/index.html.twig', [
                 'contactForm' => $contactForm->getForm()
             ]);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
+            throw new Exception($e->getMessage());
         }
     }
 

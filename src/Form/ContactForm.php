@@ -11,11 +11,11 @@ use App\Globals\_POST;
 class ContactForm extends Form
 {
     private string $errors;
-    private _POST  $post;
+    private _POST $post;
 
-    public function __construct(_POST $post)
+    public function __construct()
     {
-        $this->post = $post;
+        $this->post = new _POST();
     }
 
     /**
@@ -35,9 +35,9 @@ class ContactForm extends Form
                 'id' => 'mail',
                 'class' => 'form-control',
                 'value' => $this->post->_POST('mail')
-            ])
+                ])
             ->addLabelFor('phone', 'Telephone :')
-            ->addTextArea('phone', $this->post->_POST('phone') , [
+            ->addTextArea('phone', $this->post->_POST('phone'), [
                 'id' => 'chapo',
                 'class' => 'form-control',
             ])
@@ -109,5 +109,4 @@ class ContactForm extends Form
     {
         return $this->errors ?? '';
     }
-
 }

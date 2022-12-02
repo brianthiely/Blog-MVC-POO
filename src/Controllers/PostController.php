@@ -15,6 +15,14 @@ use Twig\Error\SyntaxError;
 
 class PostController extends Controller
 {
+    private _SESSION $session;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->session = new _SESSION();
+    }
+
     /**
      * @throws RuntimeError
      * @throws SyntaxError
@@ -41,9 +49,9 @@ class PostController extends Controller
                 $postRepository->save($post);
                 $this->redirect('/post');
             }
-                _SESSION::setSession('errors', $addPostForm->getErrors());
+            $this->session->setSession('errors', $addPostForm->getErrors());
         }
-            _SESSION::setSession('errors', $addPostForm->getErrors());
+        $this->session->setSession('errors', $addPostForm->getErrors());
         try {
             $this->twig->display('post/add.html.twig', [
                 'addPostForm' => $addPostForm->getForm()
