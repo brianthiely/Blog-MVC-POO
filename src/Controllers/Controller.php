@@ -14,7 +14,6 @@ abstract class Controller
    protected Environment $twig;
    protected _SESSION $session;
 
-
     public function __construct()
    {
         $this->loader = New FilesystemLoader(ROOT . '/src/Views');
