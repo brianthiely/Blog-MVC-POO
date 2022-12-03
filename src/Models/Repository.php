@@ -67,4 +67,14 @@ class Repository extends BaseEntity
         $stmt = $this->request("SELECT *, DATE_FORMAT(createdAt, '%d/%m/%Y à %Hh%i') AS created_fr, DATE_FORMAT(updatedAt, '%d/%m/%Y à %Hh%i') AS updated_fr FROM $table ORDER BY createdAt DESC");
         return $stmt->fetchAll();
     }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function fetch(int $id): mixed
+    {
+        $table = $this->getTable();
+        return $this->request("SELECT *, DATE_FORMAT(createdAt, '%d/%m/%Y à %Hh%i') AS created_fr, DATE_FORMAT(updatedAt, '%d/%m/%Y à %Hh%i') AS updated_fr FROM $table WHERE id = ?", [$id])->fetch();
+    }
 }

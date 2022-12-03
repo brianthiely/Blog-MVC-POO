@@ -35,6 +35,19 @@ class PostController extends Controller
     /**
      * @throws Exception
      */
+    public function read(int $id)
+    {
+        $post = (new PostRepository())->getPost($id);
+        try {
+            $this->twig->display('post/read.html.twig', compact('post'));
+        } catch (LoaderError|RuntimeError|SyntaxError $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
     public function add(): void
     {
         $addPostForm = new AddPostForm();

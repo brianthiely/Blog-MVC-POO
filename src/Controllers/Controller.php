@@ -23,6 +23,8 @@ abstract class Controller
         $this->global = new Globals();
    }
 
+
+
     /**
      * @param string $page
      * @return void

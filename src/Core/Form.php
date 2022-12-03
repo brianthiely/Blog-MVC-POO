@@ -56,9 +56,8 @@ abstract class Form extends Controller
                 if ($value === true) {
                     $str .= " $attribute";
                 }
-            } else {
-                $str .= " $attribute=\"$value\"";
             }
+                $str .= " $attribute=\"$value\"";
         }
         return $str;
     }

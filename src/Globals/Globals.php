@@ -80,7 +80,6 @@ class Globals
         return isset($this->POST[$key]);
     }
 
-    // Recuperer la variable d'environnement du fichier .env
     /**
      * @param string $key
      * @return string
