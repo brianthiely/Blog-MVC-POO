@@ -4,19 +4,14 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Core\Form;
-use App\Globals\_POST;
-use App\Globals\_SESSION;
 
 class AddPostForm extends Form
 {
-    private string $errors;
-    private _POST  $post;
-    private _SESSION $session;
+    private ?string $errors = null;
 
-    public function __construct(_POST $post, _SESSION $session)
+    public function __construct()
     {
-        $this->post = $post;
-        $this->session = $session;
+        parent::__construct();
     }
 
     /**
@@ -29,21 +24,22 @@ class AddPostForm extends Form
             ->addInput('text', 'title', [
                 'id' => 'title',
                 'class' => 'form-control',
-                'value' => $this->post->_POST('title')
+                'value' => $this->global->getPost('title')
 
             ])
             ->addLabelFor('author', 'Auteur :')
             ->addInput('text', 'author', [
                 'id' => 'author',
-                'class' => 'form-control', 'value' => $this->post->_POST('author') ?? $this->session->setSession('user', 'username')
+                'class' => 'form-control', 'value' => $this->global->getPost('author') ?? $this->global->setSession
+                    ('user', 'username')
             ])
             ->addLabelFor('chapo', 'Chap :')
-            ->addTextArea('chapo', $this->post->_POST('chapo'), [
+            ->addTextArea('chapo', $this->global->getPost('chapo'), [
                 'id' => 'chapo',
                 'class' => 'form-control',
             ])
             ->addLabelFor('content', 'Content :')
-            ->addTextArea('content', $this->post->_POST('content'), [
+            ->addTextArea('content', $this->global->getPost('content'), [
                 'id' => 'content',
                 'class' => 'form-control',
             ])
@@ -51,20 +47,27 @@ class AddPostForm extends Form
                 'class' => 'btn btn-primary mt-3 w-100'
             ])
             ->endForm();
-
         return $this->create();
     }
 
     /**
      * @return bool
      */
-    public function isComplete(): bool
+    public function isValid(): bool
     {
-        if (!Form::validate($_POST, ['title', 'author', 'chapo', 'content'])) {
-            $this->errors = 'The form is not complete';
-            return false;
+        if (empty($this->global->getPost('title'))) {
+            $this->errors .= 'Le titre est obligatoire';
         }
-        return true;
+        if (empty($this->global->getPost('author'))) {
+            $this->errors .= 'Author is required';
+        }
+        if (empty($this->global->getPost('chapo'))) {
+            $this->errors .= 'Chapo is required';
+        }
+        if (empty($this->global->getPost('content'))) {
+            $this->errors .= 'Content is required';
+        }
+        return empty($this->errors);
     }
 
     /**
@@ -73,10 +76,10 @@ class AddPostForm extends Form
     public function getData(): array
     {
         return [
-            'title' => $this->post->_POST('title'),
-            'author' => $this->post->_POST('author'),
-            'chapo' => $this->post->_POST('chapo'),
-            'content' => $this->post->_POST('content'),
+            'title' => $this->global->getPost('title'),
+            'author' => $this->global->getPost('author'),
+            'chapo' => $this->global->getPost('chapo'),
+            'content' => $this->global->getPost('content'),
         ];
     }
 
@@ -85,6 +88,6 @@ class AddPostForm extends Form
      */
     public function getErrors(): string
     {
-        return $this->errors ?? '';
+        return $this->errors;
     }
 }

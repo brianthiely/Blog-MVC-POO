@@ -46,9 +46,6 @@ class Repository extends BaseEntity
         // Retrieve the keys of the array
         $fields = array_keys($properties);
 
-        // Retrieve the values of the array
-        $values = array_values($properties);
-
         // On transforme le tableau "champs" en une chaine de caractères
         $fields_list = implode(', ', $fields);
 
@@ -69,5 +66,15 @@ class Repository extends BaseEntity
         $table = $this->getTable();
         $stmt = $this->request("SELECT *, DATE_FORMAT(createdAt, '%d/%m/%Y à %Hh%i') AS created_fr, DATE_FORMAT(updatedAt, '%d/%m/%Y à %Hh%i') AS updated_fr FROM $table ORDER BY createdAt DESC");
         return $stmt->fetchAll();
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function fetch(int $id): mixed
+    {
+        $table = $this->getTable();
+        return $this->request("SELECT *, DATE_FORMAT(createdAt, '%d/%m/%Y à %Hh%i') AS created_fr, DATE_FORMAT(updatedAt, '%d/%m/%Y à %Hh%i') AS updated_fr FROM $table WHERE id = ?", [$id])->fetch();
     }
 }

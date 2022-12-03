@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Form\AddPostForm;
-use App\Globals\_SESSION;
 use App\Models\Post;
 use App\Models\PostRepository;
 use Exception;
@@ -15,15 +14,35 @@ use Twig\Error\SyntaxError;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws LoaderError
+     * @throws Exception
      */
     public function index()
     {
         $posts = (new PostRepository())->getPosts();
-        $this->twig->display('post/index.html.twig', compact('posts'));
+        try {
+            $this->twig->display('post/index.html.twig', compact('posts'));
+        } catch (LoaderError|RuntimeError|SyntaxError $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function read(int $id)
+    {
+        $post = (new PostRepository())->getPost($id);
+        try {
+            $this->twig->display('post/read.html.twig', compact('post'));
+        } catch (LoaderError|RuntimeError|SyntaxError $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     /**
@@ -33,17 +52,16 @@ class PostController extends Controller
     {
         $addPostForm = new AddPostForm();
 
-        if ($addPostForm->isSubmitted()) {
-            if ($addPostForm->isComplete()) {
+        if (!$addPostForm->isSubmitted()) {
+            if ($addPostForm->isValid()) {
                 $data = $addPostForm->getData();
                 $post = new Post($data);
                 $postRepository = new PostRepository;
                 $postRepository->save($post);
                 $this->redirect('/post');
             }
-                _SESSION::setSession('errors', $addPostForm->getErrors());
+            $this->global->setSession('errors', $addPostForm->getErrors());
         }
-            _SESSION::setSession('errors', $addPostForm->getErrors());
         try {
             $this->twig->display('post/add.html.twig', [
                 'addPostForm' => $addPostForm->getForm()

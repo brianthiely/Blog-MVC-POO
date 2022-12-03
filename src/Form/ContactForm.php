@@ -6,16 +6,14 @@ namespace App\Form;
 use App\Core\Form;
 use App\Mailer\Mailer;
 use PHPMailer\PHPMailer\Exception;
-use App\Globals\_POST;
 
 class ContactForm extends Form
 {
-    private string $errors;
-    private _POST  $post;
+    private ?string $errors = null;
 
-    public function __construct(_POST $post)
+    public function __construct()
     {
-        $this->post = $post;
+        parent::__construct();
     }
 
     /**
@@ -28,78 +26,98 @@ class ContactForm extends Form
             ->addInput('text', 'name', [
                 'id' => 'name',
                 'class' => 'form-control',
-                'value' => $this->post->_POST('name')
+                'value' => $this->global->getPost('name')
             ])
             ->addLabelFor('mail', 'E-mail :')
             ->addInput('text', 'mail', [
                 'id' => 'mail',
                 'class' => 'form-control',
-                'value' => $this->post->_POST('mail')
-            ])
+                'value' => $this->global->getPost('mail')
+                ])
             ->addLabelFor('phone', 'Telephone :')
-            ->addTextArea('phone', $this->post->_POST('phone') , [
-                'id' => 'chapo',
+            ->addInput('text', 'phone', [
+                'id' => 'phone',
                 'class' => 'form-control',
+                'value' => $this->global->getPost('phone')
             ])
             ->addLabelFor('message', 'Message :')
-            ->addTextArea('message', $this->post->_POST('message') , [
+            ->addTextArea('message', $this->global->getPost('message') , [
                 'id' => 'content',
                 'class' => 'form-control',
             ])
-            ->addButton('Envoyer', [
-                'class' => 'btn btn-primary w-100 mt-3'
+            ->addButton('Submit', [
+                'class' => 'btn btn-primary mt-3 w-100'
             ])
             ->endForm();
+
         return $this->create();
     }
 
     /**
      * @return bool
      */
-    public function isComplete(): bool
+    public function isValid(): bool
     {
-        if (!Form::validate($_POST, ['name', 'mail', 'phone', 'message'])) {
-            $this->errors = 'The form is not complete';
-            return false;
+        if (empty($this->global->getPost('name'))) {
+            $this->errors .= 'Name is required';
         }
-        return true;
+        if (empty($this->global->getPost('mail'))) {
+            $this->errors .= 'Mail is required';
+        }
+        if (empty($this->global->getPost('phone'))) {
+            $this->errors .= 'Phone is required';
+        }
+        if (empty($this->global->getPost('message'))) {
+            $this->errors .= 'Message is required';
+        }
+        return empty($this->errors);
     }
 
     /**
      * @return bool
      */
-    public function isValidEmail(): bool
+    public function isEmailValid(): bool
     {
-        if (!filter_var($this->post->_POST('mail'), FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->global->getPost('mail'), FILTER_VALIDATE_EMAIL)) {
             $this->errors = 'The email is not valid';
         }
         return empty($this->errors);
     }
-
 
     /**
      * @return bool|int
      */
     public function isPhoneValid(): bool|int
     {
-        if (!preg_match('/^[0-9]{10}$/', $this->post->_POST('phone'))) {
+        // allow +, - and . and () in phone number
+        $filtered_phone = filter_var($this->global->getPost('phone'), FILTER_SANITIZE_NUMBER_INT);
+        // Remove "-" from number
+        $phone_to_check = str_replace("-", "", $filtered_phone);
+        // Check the length of number
+        // This can be customized if you want phone number from a specific country
+        if (strlen($phone_to_check) < 10 || strlen($phone_to_check) > 14) {
             $this->errors = 'The phone number is not valid';
         }
         return empty($this->errors);
     }
 
     /**
+     * @return void
      * @throws Exception
      */
     public function sendForm(): void
     {
-        $mailer = new Mailer();
-        $mailer->send(
-            'Nouveau message de ' . $this->post->_POST('name'),
-            'Nom : ' . $this->post->_POST('name') . '<br>' . 'Email : ' . $this->post->_POST('mail') . '<br>' . 'Telephone : ' .
-            $this->post->_POST('phone') . '<br>' .
-            'Message : ' . $this->post->_POST('mail'),
-        );
+        try {
+            $mailer = new Mailer();
+            $mailer->send(
+                'Nouveau message de ' . $this->global->getPost('name'),
+                'Nom : ' . $this->global->getPost('name') . '<br>' . 'Email : ' . $this->global->getPost('mail') . '<br>' .
+                'Telephone : ' .
+                $this->global->getPost('phone') . '<br>' .
+                'Message : ' . $this->global->getPost('message'));
+            } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     /**
@@ -107,7 +125,6 @@ class ContactForm extends Form
      */
     public function getErrors(): string
     {
-        return $this->errors ?? '';
+        return $this->errors;
     }
-
 }

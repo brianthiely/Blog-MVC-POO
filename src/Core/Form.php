@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Core;
 
-class Form
+use App\Controllers\Controller;
+
+abstract class Form extends Controller
 {
     private string $formCode = '';
 
@@ -21,7 +23,7 @@ class Form
      */
     public function isSubmitted(): bool
     {
-        return !empty($_POST);
+        return $this->global->isPost('submit');
     }
 
     /**
@@ -54,9 +56,8 @@ class Form
                 if ($value === true) {
                     $str .= " $attribute";
                 }
-            } else {
-                $str .= " $attribute=\"$value\"";
             }
+                $str .= " $attribute=\"$value\"";
         }
         return $str;
     }
@@ -130,24 +131,6 @@ class Form
         $this->formCode .= "<textarea name='$name'";
         $this->formCode .= $attributes ? $this->addAttributes($attributes) : '';
         $this->formCode .= ">$value</textarea>";
-        return $this;
-    }
-
-    /**
-     * Add a select to the form
-     * @param string $name
-     * @param array $options
-     * @param array $attributes
-     * @return $this
-     */
-    public function addSelect(string $name, array $options, array $attributes = []): self
-    {
-        $this->formCode .= "<select name='$name'";
-        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' : '>';
-        foreach ($options as $value => $label) {
-            $this->formCode .= "<option value='\"$value\"'>$label</option>";
-        }
-        $this->formCode .= '</select>';
         return $this;
     }
 
