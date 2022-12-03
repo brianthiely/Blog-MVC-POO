@@ -27,7 +27,6 @@ class PostController extends Controller
         $posts = (new PostRepository())->getPosts();
         try {
             $this->twig->display('post/index.html.twig', compact('posts'));
-            exit();
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             throw new Exception($e->getMessage());
         }

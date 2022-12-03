@@ -29,6 +29,5 @@ abstract class Controller
     #[NoReturn] protected function redirect(string $page): void
     {
         header('Location: ' . $page);
-        exit();
     }
 }
