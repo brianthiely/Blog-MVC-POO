@@ -76,7 +76,6 @@ class ContactForm extends Form
         return empty($this->errors);
     }
 
-
     /**
      * @return bool|int
      */
@@ -93,7 +92,6 @@ class ContactForm extends Form
         }
         return empty($this->errors);
     }
-
 
     /**
      * @return void

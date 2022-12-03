@@ -24,10 +24,10 @@ class Main
 
     /**
      * Main router
-     * @return void
+     * @return string
      * @throws Exception
      */
-    public function start(): void
+    public function start(): string
     {
         session_start();
 
@@ -63,8 +63,7 @@ class Main
                 ) : $controller->$action();
             }
                 http_response_code(404);
-                echo "This page doesn't exist";
-
+                return "This page doesn't exist";
         }
             // No parameter we return the default controller
             $controller = new MainController;
