@@ -55,11 +55,20 @@ class AddPostForm extends Form
      */
     public function isValid(): bool
     {
-        if (!Form::validate($_POST, ['title', 'author', 'chapo', 'content'])) {
-            $this->errors = 'The form is not complete';
-            return false;
+        if (empty($this->post->_POST('title'))) {
+            $this->errors .= 'Title is required';
         }
-        return true;
+        if (empty($this->post->_POST('author'))) {
+            $this->errors .= 'Author is required';
+        }
+        if (empty($this->post->_POST('chapo'))) {
+            $this->errors .= 'Chapo is required';
+        }
+        if (empty($this->post->_POST('content'))) {
+            $this->errors .= 'Content is required';
+        }
+
+        return empty($this->errors);
     }
 
     /**

@@ -58,11 +58,20 @@ class ContactForm extends Form
      */
     public function isValid(): bool
     {
-        if (!Form::validate($_POST, ['name', 'mail', 'phone', 'message'])) {
-            $this->errors = 'The form is not complete';
-            return false;
+        if (empty($this->post->_POST('name'))) {
+            $this->errors .= 'Name is required';
         }
-        return true;
+        if (empty($this->post->_POST('mail'))) {
+            $this->errors .= 'Mail is required';
+        }
+        if (empty($this->post->_POST('phone'))) {
+            $this->errors .= 'Phone is required';
+        }
+        if (empty($this->post->_POST('message'))) {
+            $this->errors .= 'Message is required';
+        }
+
+        return empty($this->errors);
     }
 
     /**
