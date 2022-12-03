@@ -3,9 +3,20 @@ declare(strict_types=1);
 
 namespace App\Core;
 
-class Form
+use App\Globals\_POST;
+use App\Globals\_SESSION;
+
+abstract class Form
 {
     private string $formCode = '';
+    protected _POST $post;
+    protected _SESSION $session;
+
+    public function __construct()
+    {
+        $this->post = new _POST();
+        $this->session = new _SESSION();
+    }
 
     /**
      * Generate the HTML form
@@ -21,7 +32,7 @@ class Form
      */
     public function isSubmitted(): bool
     {
-        return !empty($_POST);
+        return $this->post->isPost('submit');
     }
 
     /**

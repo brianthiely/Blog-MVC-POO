@@ -4,20 +4,14 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Core\Form;
-use App\Globals\_POST;
-use App\Globals\_SESSION;
 
 class AddPostForm extends Form
 {
     private string $errors;
-    private _POST  $post;
-    private _SESSION $session;
-
 
     public function __construct()
     {
-        $this->post = new _POST();
-        $this->session = new _SESSION();
+        parent::__construct();
     }
 
     /**
@@ -59,7 +53,7 @@ class AddPostForm extends Form
     /**
      * @return bool
      */
-    public function isComplete(): bool
+    public function isValid(): bool
     {
         if (!Form::validate($_POST, ['title', 'author', 'chapo', 'content'])) {
             $this->errors = 'The form is not complete';

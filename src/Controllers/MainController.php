@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Globals\_SESSION;
 use PHPMailer\PHPMailer\Exception;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -12,14 +11,10 @@ use App\Form\ContactForm;
 
 class MainController extends Controller
 {
-    private _SESSION $session;
-
     public function __construct()
     {
         parent::__construct();
-        $this->session = new _SESSION();
     }
-
 
     /**
      * @return void
@@ -30,14 +25,15 @@ class MainController extends Controller
         $contactForm = new ContactForm();
 
         // is the form submitted ?
-        if ($contactForm->isSubmitted()) {
+        if (!$contactForm->isSubmitted()) {
             // is the form valid ?
-            if ($contactForm->isComplete()) {
+            if ($contactForm->isValid()) {
                 // check if email is valid
-                if ($contactForm->isValidEmail()){
+                if ($contactForm->isEmailValid()){
                     // Check if phone number is valid
                     if ($contactForm->isPhoneValid()) {
                         $contactForm->sendForm();
+                        $this->session->setSession('message', 'Your message has been sent');
                         $this->redirect('/');
                     }
                     $this->session->setSession('errors', $contactForm->getErrors());
@@ -46,6 +42,7 @@ class MainController extends Controller
             }
             $this->session->setSession('errors', $contactForm->getErrors());
         }
+
         try {
             $this->twig->display('main/index.html.twig', [
                 'contactForm' => $contactForm->getForm()
@@ -54,5 +51,4 @@ class MainController extends Controller
             throw new Exception($e->getMessage());
         }
     }
-
 }

@@ -6,16 +6,14 @@ namespace App\Form;
 use App\Core\Form;
 use App\Mailer\Mailer;
 use PHPMailer\PHPMailer\Exception;
-use App\Globals\_POST;
 
 class ContactForm extends Form
 {
     private string $errors;
-    private _POST $post;
 
     public function __construct()
     {
-        $this->post = new _POST();
+        parent::__construct();
     }
 
     /**
@@ -37,26 +35,28 @@ class ContactForm extends Form
                 'value' => $this->post->_POST('mail')
                 ])
             ->addLabelFor('phone', 'Telephone :')
-            ->addTextArea('phone', $this->post->_POST('phone'), [
-                'id' => 'chapo',
+            ->addInput('text', 'phone', [
+                'id' => 'phone',
                 'class' => 'form-control',
+                'value' => $this->post->_POST('phone')
             ])
             ->addLabelFor('message', 'Message :')
             ->addTextArea('message', $this->post->_POST('message') , [
                 'id' => 'content',
                 'class' => 'form-control',
             ])
-            ->addButton('Envoyer', [
-                'class' => 'btn btn-primary w-100 mt-3'
+            ->addButton('Submit', [
+                'class' => 'btn btn-primary mt-3 w-100'
             ])
             ->endForm();
+
         return $this->create();
     }
 
     /**
      * @return bool
      */
-    public function isComplete(): bool
+    public function isValid(): bool
     {
         if (!Form::validate($_POST, ['name', 'mail', 'phone', 'message'])) {
             $this->errors = 'The form is not complete';
@@ -68,7 +68,7 @@ class ContactForm extends Form
     /**
      * @return bool
      */
-    public function isValidEmail(): bool
+    public function isEmailValid(): bool
     {
         if (!filter_var($this->post->_POST('mail'), FILTER_VALIDATE_EMAIL)) {
             $this->errors = 'The email is not valid';
@@ -82,24 +82,35 @@ class ContactForm extends Form
      */
     public function isPhoneValid(): bool|int
     {
-        if (!preg_match('/^[0-9]{10}$/', $this->post->_POST('phone'))) {
+        // allow +, - and . and () in phone number
+        $filtered_phone_number = filter_var($this->post->_POST('phone'), FILTER_SANITIZE_NUMBER_INT);
+        // Remove "-" from number
+        $phone_to_check = str_replace("-", "", $filtered_phone_number);
+        // Check the length of number
+        // This can be customized if you want phone number from a specific country
+        if (strlen($phone_to_check) < 10 || strlen($phone_to_check) > 14) {
             $this->errors = 'The phone number is not valid';
         }
         return empty($this->errors);
     }
 
+
     /**
+     * @return void
      * @throws Exception
      */
     public function sendForm(): void
     {
-        $mailer = new Mailer();
-        $mailer->send(
-            'Nouveau message de ' . $this->post->_POST('name'),
-            'Nom : ' . $this->post->_POST('name') . '<br>' . 'Email : ' . $this->post->_POST('mail') . '<br>' . 'Telephone : ' .
-            $this->post->_POST('phone') . '<br>' .
-            'Message : ' . $this->post->_POST('mail'),
-        );
+        try {
+            $mailer = new Mailer();
+            $mailer->send(
+                'Nouveau message de ' . $this->post->_POST('name'),
+                'Nom : ' . $this->post->_POST('name') . '<br>' . 'Email : ' . $this->post->_POST('mail') . '<br>' . 'Telephone : ' .
+                $this->post->_POST('phone') . '<br>' .
+                'Message : ' . $this->post->_POST('mail'));
+            } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     /**

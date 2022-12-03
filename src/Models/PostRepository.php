@@ -9,4 +9,6 @@ class PostRepository extends Repository
     {
         return $this->fetchAll();
     }
+
+
 }
