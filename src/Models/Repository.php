@@ -46,9 +46,6 @@ class Repository extends BaseEntity
         // Retrieve the keys of the array
         $fields = array_keys($properties);
 
-        // Retrieve the values of the array
-        $values = array_values($properties);
-
         // On transforme le tableau "champs" en une chaine de caractères
         $fields_list = implode(', ', $fields);
 
