@@ -145,24 +145,6 @@ abstract class Form
     }
 
     /**
-     * Add a select to the form
-     * @param string $name
-     * @param array $options
-     * @param array $attributes
-     * @return $this
-     */
-    public function addSelect(string $name, array $options, array $attributes = []): self
-    {
-        $this->formCode .= "<select name='$name'";
-        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' : '>';
-        foreach ($options as $value => $label) {
-            $this->formCode .= "<option value='\"$value\"'>$label</option>";
-        }
-        $this->formCode .= '</select>';
-        return $this;
-    }
-
-    /**
      * Add a button to the form
      * @param string $text
      * @param array $attributes
