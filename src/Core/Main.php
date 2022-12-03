@@ -24,10 +24,9 @@ class Main
 
     /**
      * Main router
-     * @return string
      * @throws Exception
      */
-    public function start(): string
+    public function start()
     {
         session_start();
 
