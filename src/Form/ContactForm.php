@@ -9,7 +9,7 @@ use PHPMailer\PHPMailer\Exception;
 
 class ContactForm extends Form
 {
-    private string $errors;
+    private ?string $errors = null;
 
     public function __construct()
     {
@@ -26,22 +26,22 @@ class ContactForm extends Form
             ->addInput('text', 'name', [
                 'id' => 'name',
                 'class' => 'form-control',
-                'value' => $this->post->_POST('name')
+                'value' => $this->global->getPost('name')
             ])
             ->addLabelFor('mail', 'E-mail :')
             ->addInput('text', 'mail', [
                 'id' => 'mail',
                 'class' => 'form-control',
-                'value' => $this->post->_POST('mail')
+                'value' => $this->global->getPost('mail')
                 ])
             ->addLabelFor('phone', 'Telephone :')
             ->addInput('text', 'phone', [
                 'id' => 'phone',
                 'class' => 'form-control',
-                'value' => $this->post->_POST('phone')
+                'value' => $this->global->getPost('phone')
             ])
             ->addLabelFor('message', 'Message :')
-            ->addTextArea('message', $this->post->_POST('message') , [
+            ->addTextArea('message', $this->global->getPost('message') , [
                 'id' => 'content',
                 'class' => 'form-control',
             ])
@@ -58,19 +58,18 @@ class ContactForm extends Form
      */
     public function isValid(): bool
     {
-        if (empty($this->post->_POST('name'))) {
+        if (empty($this->global->getPost('name'))) {
             $this->errors .= 'Name is required';
         }
-        if (empty($this->post->_POST('mail'))) {
+        if (empty($this->global->getPost('mail'))) {
             $this->errors .= 'Mail is required';
         }
-        if (empty($this->post->_POST('phone'))) {
+        if (empty($this->global->getPost('phone'))) {
             $this->errors .= 'Phone is required';
         }
-        if (empty($this->post->_POST('message'))) {
+        if (empty($this->global->getPost('message'))) {
             $this->errors .= 'Message is required';
         }
-
         return empty($this->errors);
     }
 
@@ -79,7 +78,7 @@ class ContactForm extends Form
      */
     public function isEmailValid(): bool
     {
-        if (!filter_var($this->post->_POST('mail'), FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->global->getPost('mail'), FILTER_VALIDATE_EMAIL)) {
             $this->errors = 'The email is not valid';
         }
         return empty($this->errors);
@@ -91,9 +90,9 @@ class ContactForm extends Form
     public function isPhoneValid(): bool|int
     {
         // allow +, - and . and () in phone number
-        $filtered_phone_number = filter_var($this->post->_POST('phone'), FILTER_SANITIZE_NUMBER_INT);
+        $filtered_phone = filter_var($this->global->getPost('phone'), FILTER_SANITIZE_NUMBER_INT);
         // Remove "-" from number
-        $phone_to_check = str_replace("-", "", $filtered_phone_number);
+        $phone_to_check = str_replace("-", "", $filtered_phone);
         // Check the length of number
         // This can be customized if you want phone number from a specific country
         if (strlen($phone_to_check) < 10 || strlen($phone_to_check) > 14) {
@@ -111,10 +110,11 @@ class ContactForm extends Form
         try {
             $mailer = new Mailer();
             $mailer->send(
-                'Nouveau message de ' . $this->post->_POST('name'),
-                'Nom : ' . $this->post->_POST('name') . '<br>' . 'Email : ' . $this->post->_POST('mail') . '<br>' . 'Telephone : ' .
-                $this->post->_POST('phone') . '<br>' .
-                'Message : ' . $this->post->_POST('mail'));
+                'Nouveau message de ' . $this->global->getPost('name'),
+                'Nom : ' . $this->global->getPost('name') . '<br>' . 'Email : ' . $this->global->getPost('mail') . '<br>' .
+                'Telephone : ' .
+                $this->global->getPost('phone') . '<br>' .
+                'Message : ' . $this->global->getPost('message'));
             } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
@@ -125,6 +125,6 @@ class ContactForm extends Form
      */
     public function getErrors(): string
     {
-        return $this->errors ?? '';
+        return $this->errors;
     }
 }

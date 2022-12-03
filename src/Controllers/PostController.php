@@ -47,7 +47,7 @@ class PostController extends Controller
                 $postRepository->save($post);
                 $this->redirect('/post');
             }
-            $this->session->setSession('errors', $addPostForm->getErrors());
+            $this->global->setSession('errors', $addPostForm->getErrors());
         }
         try {
             $this->twig->display('post/add.html.twig', [

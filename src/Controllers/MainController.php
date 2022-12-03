@@ -33,14 +33,14 @@ class MainController extends Controller
                     // Check if phone number is valid
                     if ($contactForm->isPhoneValid()) {
                         $contactForm->sendForm();
-                        $this->session->setSession('message', 'Your message has been sent');
+                        $this->global->setSession('message', 'Your message has been sent');
                         $this->redirect('/');
                     }
-                    $this->session->setSession('errors', $contactForm->getErrors());
+                    $this->global->setSession('message', $contactForm->getErrors());
                 }
-                $this->session->setSession('errors', $contactForm->getErrors());
+                $this->global->setSession('message', $contactForm->getErrors());
             }
-            $this->session->setSession('errors', $contactForm->getErrors());
+            $this->global->setSession('message', $contactForm->getErrors());
         }
 
         try {

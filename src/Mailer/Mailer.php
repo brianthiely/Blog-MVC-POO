@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Mailer;
 
-use App\Globals\_ENV;
+use App\Globals\Globals;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -15,20 +15,24 @@ require_once ROOT . '/vendor/phpmailer/phpmailer/src/Exception.php';
 class Mailer
 {
     private PHPMailer $mailer;
-    private _ENV $env;
 
     public function __construct()
     {
-        $this->env = new _ENV();
+        $globals = new Globals();
+        $MAILER_HOST = $globals->getEnv('MAILER_HOST');
+        $MAILER_PORT = $globals->getEnv('MAILER_PORT');
+        $MAILER_USERNAME = $globals->getEnv('MAILER_USERNAME');
+        $MAILER_PASSWORD = $globals->getEnv('MAILER_PASSWORD');
+
         $this->mailer = new \PHPMailer\PHPMailer\PHPMailer();
         $this->mailer->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
         $this->mailer->isSMTP();
-        $this->mailer->Host = $this->env->getEnv('MAILER_HOST');
+        $this->mailer->Host = $MAILER_HOST;
         $this->mailer->SMTPAuth = true;
-        $this->mailer->Username = $this->env->getEnv('ADMIN_EMAIL');
-        $this->mailer->Password = $this->env->getEnv('MAIL_PASSWORD');
+        $this->mailer->Username = $MAILER_USERNAME;
+        $this->mailer->Password = $MAILER_PASSWORD;
         $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $this->mailer->Port = $this->env->getEnv('MAILER_PORT');
+        $this->mailer->Port = $MAILER_PORT;
         $this->mailer->setLanguage('fr', 'vendor\phpmailer\phpmailer\language\phpmailer.lang-fr.php');
         $this->mailer->CharSet = 'UTF-8';
         $this->mailer->isHTML(true);
@@ -41,10 +45,14 @@ class Mailer
      */
     public function send(string $subject, string $body): bool
     {
+        $globals = new Globals();
+        $MAILER_FROM = $globals->getEnv('MAILER_USERNAME');
+        $MAILER_FROM_NAME = $globals->getEnv('MAILER_USERNAME');
+
         try {
             //Recipients
-            $this->mailer->setFrom($this->env->getEnv('ADMIN_EMAIL'));
-            $this->mailer->addAddress($this->env->getEnv('ADMIN_EMAIL'));
+            $this->mailer->setFrom($MAILER_FROM);
+            $this->mailer->addAddress($MAILER_FROM_NAME);     // Add a recipient
 
             // Content
             $this->mailer->Subject = $subject;

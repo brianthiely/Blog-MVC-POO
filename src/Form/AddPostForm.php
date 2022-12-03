@@ -7,7 +7,7 @@ use App\Core\Form;
 
 class AddPostForm extends Form
 {
-    private string $errors;
+    private ?string $errors = null;
 
     public function __construct()
     {
@@ -24,21 +24,22 @@ class AddPostForm extends Form
             ->addInput('text', 'title', [
                 'id' => 'title',
                 'class' => 'form-control',
-                'value' => $this->post->_POST('title')
+                'value' => $this->global->getPost('title')
 
             ])
             ->addLabelFor('author', 'Auteur :')
             ->addInput('text', 'author', [
                 'id' => 'author',
-                'class' => 'form-control', 'value' => $this->post->_POST('author') ?? $this->session->setSession('user', 'username')
+                'class' => 'form-control', 'value' => $this->global->getPost('author') ?? $this->global->setSession
+                    ('user', 'username')
             ])
             ->addLabelFor('chapo', 'Chap :')
-            ->addTextArea('chapo', $this->post->_POST('chapo'), [
+            ->addTextArea('chapo', $this->global->getPost('chapo'), [
                 'id' => 'chapo',
                 'class' => 'form-control',
             ])
             ->addLabelFor('content', 'Content :')
-            ->addTextArea('content', $this->post->_POST('content'), [
+            ->addTextArea('content', $this->global->getPost('content'), [
                 'id' => 'content',
                 'class' => 'form-control',
             ])
@@ -46,7 +47,6 @@ class AddPostForm extends Form
                 'class' => 'btn btn-primary mt-3 w-100'
             ])
             ->endForm();
-
         return $this->create();
     }
 
@@ -55,19 +55,18 @@ class AddPostForm extends Form
      */
     public function isValid(): bool
     {
-        if (empty($this->post->_POST('title'))) {
-            $this->errors .= 'Title is required';
+        if (empty($this->global->getPost('title'))) {
+            $this->errors .= 'Le titre est obligatoire';
         }
-        if (empty($this->post->_POST('author'))) {
+        if (empty($this->global->getPost('author'))) {
             $this->errors .= 'Author is required';
         }
-        if (empty($this->post->_POST('chapo'))) {
+        if (empty($this->global->getPost('chapo'))) {
             $this->errors .= 'Chapo is required';
         }
-        if (empty($this->post->_POST('content'))) {
+        if (empty($this->global->getPost('content'))) {
             $this->errors .= 'Content is required';
         }
-
         return empty($this->errors);
     }
 
@@ -77,10 +76,10 @@ class AddPostForm extends Form
     public function getData(): array
     {
         return [
-            'title' => $this->post->_POST('title'),
-            'author' => $this->post->_POST('author'),
-            'chapo' => $this->post->_POST('chapo'),
-            'content' => $this->post->_POST('content'),
+            'title' => $this->global->getPost('title'),
+            'author' => $this->global->getPost('author'),
+            'chapo' => $this->global->getPost('chapo'),
+            'content' => $this->global->getPost('content'),
         ];
     }
 
@@ -89,6 +88,6 @@ class AddPostForm extends Form
      */
     public function getErrors(): string
     {
-        return $this->errors ?? '';
+        return $this->errors;
     }
 }
