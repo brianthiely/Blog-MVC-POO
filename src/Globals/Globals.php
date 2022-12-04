@@ -149,3 +149,4 @@ class Globals
         return $this->getServer('REQUEST_URI');
     }
 }
+
