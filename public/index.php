@@ -9,4 +9,9 @@ $dotenv = Dotenv\Dotenv::createImmutable(ROOT);
 $dotenv->load();
 
 $app = new Main();
-$app->start();
+
+try {
+    $app->start();
+} catch (\PHPMailer\PHPMailer\Exception $e) {
+    return $e->getMessage();
+}

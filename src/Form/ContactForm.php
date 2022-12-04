@@ -75,17 +75,19 @@ class ContactForm extends Form
 
     /**
      * @return bool
+     * @throws Exception
      */
     public function isEmailValid(): bool
     {
         if (!filter_var($this->global->getPost('mail'), FILTER_VALIDATE_EMAIL)) {
-            $this->errors = 'The email is not valid';
+            throw new Exception('The email is not valid');
         }
         return empty($this->errors);
     }
 
     /**
      * @return bool|int
+     * @throws Exception
      */
     public function isPhoneValid(): bool|int
     {
@@ -96,7 +98,7 @@ class ContactForm extends Form
         // Check the length of number
         // This can be customized if you want phone number from a specific country
         if (strlen($phone_to_check) < 10 || strlen($phone_to_check) > 14) {
-            $this->errors = 'The phone number is not valid';
+            throw new Exception('The phone is not valid');
         }
         return empty($this->errors);
     }
