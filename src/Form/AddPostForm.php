@@ -56,7 +56,7 @@ class AddPostForm extends Form
     public function isValid(): bool
     {
         if (empty($this->global->getPost('title'))) {
-            $this->errors .= 'Le titre est obligatoire';
+            $this->errors .= 'The title is required';
         }
         if (empty($this->global->getPost('author'))) {
             $this->errors .= 'Author is required';
@@ -76,10 +76,10 @@ class AddPostForm extends Form
     public function getData(): array
     {
         return [
-            'title' => $this->global->getPost('title'),
-            'author' => $this->global->getPost('author'),
-            'chapo' => $this->global->getPost('chapo'),
-            'content' => $this->global->getPost('content'),
+            'title' => strip_tags($this->global->getPost('title')),
+            'author' => strip_tags($this->global->getPost('author')),
+            'chapo' => strip_tags($this->global->getPost('chapo')),
+            'content' => strip_tags($this->global->getPost('content')),
         ];
     }
 

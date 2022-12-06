@@ -16,14 +16,8 @@ class Mailer
 {
     private PHPMailer $mailer;
 
-    public function __construct()
+    public function __construct(string $MAILER_HOST, string $MAILER_USERNAME, string $MAILER_PASSWORD, string $MAILER_PORT)
     {
-        $globals = new Globals();
-        $MAILER_HOST = $globals->getEnv('MAILER_HOST');
-        $MAILER_PORT = $globals->getEnv('MAILER_PORT');
-        $MAILER_USERNAME = $globals->getEnv('MAILER_USERNAME');
-        $MAILER_PASSWORD = $globals->getEnv('MAILER_PASSWORD');
-
         $this->mailer = new \PHPMailer\PHPMailer\PHPMailer();
         $this->mailer->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
         $this->mailer->isSMTP();
@@ -37,31 +31,19 @@ class Mailer
         $this->mailer->CharSet = 'UTF-8';
         $this->mailer->isHTML(true);
     }
+
     /**
-     * @param string $subject
-     * @param string $body
-     * @return bool
      * @throws Exception
      */
-    public function send(string $subject, string $body): bool
+    public function send(array $data): void
     {
-        $globals = new Globals();
-        $MAILER_FROM = $globals->getEnv('MAILER_USERNAME');
-        $MAILER_FROM_NAME = $globals->getEnv('MAILER_USERNAME');
-
-        try {
-            //Recipients
-            $this->mailer->setFrom($MAILER_FROM);
-            $this->mailer->addAddress($MAILER_FROM_NAME);     // Add a recipient
-
-            // Content
-            $this->mailer->Subject = $subject;
-            $this->mailer->Body = $body;
-
-            return $this->mailer->send();
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $from = (new Globals())->getEnv('MAILER_USERNAME');
+        $this->mailer->setFrom($from, 'Mailer');
+        $this->mailer->Subject = 'Contact';
+        foreach ($data as $key => $value) {
+            $this->mailer->Body .= '<p><strong>' . $key . ':</strong> ' . $value . '</p> </br>';
         }
+        $this->mailer->addAddress($from);
+        $this->mailer->send();
     }
 }

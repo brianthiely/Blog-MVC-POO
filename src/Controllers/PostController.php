@@ -25,6 +25,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = (new PostRepository())->getPosts();
+
         try {
             $this->twig->display('post/index.html.twig', compact('posts'));
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
@@ -38,6 +39,7 @@ class PostController extends Controller
     public function read(int $id)
     {
         $post = (new PostRepository())->getPost($id);
+
         try {
             $this->twig->display('post/read.html.twig', compact('post'));
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
@@ -58,10 +60,12 @@ class PostController extends Controller
                 $post = new Post($data);
                 $postRepository = new PostRepository;
                 $postRepository->save($post);
+                $this->global->setSession('message', 'Your post has been added');
                 $this->redirect('/post');
             }
             $this->global->setSession('errors', $addPostForm->getErrors());
         }
+
         try {
             $this->twig->display('post/add.html.twig', [
                 'addPostForm' => $addPostForm->getForm()

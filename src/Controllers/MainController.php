@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use PHPMailer\PHPMailer\Exception;
+use App\Mailer\Mailer;
+use Exception;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -23,26 +24,18 @@ class MainController extends Controller
     public function index(): void
     {
         $contactForm = new ContactForm();
-
-        try {
-            // is the form submitted ?
-            if (!$contactForm->isSubmitted()) {
-                // is the form valid ?
-                if ($contactForm->isValid()) {
-                    // check if email is valid
-                    if ($contactForm->isEmailValid()){
-                        // Check if phone number is valid
-                        if ($contactForm->isPhoneValid()) {
-                            $contactForm->sendForm();
-                            $this->global->setSession('message', 'Your message has been sent');
-                            $this->redirect('/');
-                        }
-                    }
-                }
+        if (!$contactForm->isSubmitted()) {
+            if ($contactForm->isValid()) {
+                $data = $contactForm->getData();
+                $mailer = new Mailer($this->global->getEnv('MAILER_HOST'), $this->global->getEnv('MAILER_USERNAME'),
+                    $this->global->getEnv('MAILER_PASSWORD'), $this->global->getEnv('MAILER_PORT'));
+                $mailer->send($data);
+                $this->global->setSession('message', 'Your message has been sent');
+                $this->redirect('/');
             }
-        } catch (LoaderError|RuntimeError|SyntaxError $e) {
-            throw new Exception($e->getMessage());
+            $this->global->setSession('errors', $contactForm->getErrors());
         }
+
 
         try {
             $this->twig->display('main/index.html.twig', [
