@@ -27,23 +27,6 @@ abstract class Form extends Controller
     }
 
     /**
-     * @param array $form
-     * @param array $fields
-     * @return bool
-     */
-    public static function validate(array $form, array $fields): bool
-    {
-        foreach ($fields as $field) {
-            if (empty($form[$field])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-
-    /**
      * Add the attributes sent to the tag
      * @param array $attributes Associative array ['class' => 'form-control', 'required' => true]
      * @return string Generated character string

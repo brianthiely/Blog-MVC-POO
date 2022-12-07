@@ -7,7 +7,12 @@ use App\Core\Form;
 
 class AddPostForm extends Form
 {
-    private array $errors = [];
+    private array $errors = [
+        'title' => '',
+        'author' => '',
+        'chapo' => '',
+        'content' => '',
+    ];
 
     public function __construct()
     {
@@ -20,29 +25,36 @@ class AddPostForm extends Form
     public function getForm(): string
     {
         $this->startForm()
-            ->addLabelFor('title', 'Titre de l\'article :')
+            ->addLabelFor('title', 'Article title:')
             ->addInput('text', 'title', [
                 'id' => 'title',
-                'class' => 'form-control',
-                'value' => $this->global->getPost('title')
-
+                'value' => $this->getData()['title'] ?? '',
+                'class' => $this->errors['title'] ? 'form-control is-invalid' : 'form-control',
             ])
-            ->addLabelFor('author', 'Auteur :')
+            ->addSpan($this->errors['title'] ?? '', ['class' => 'invalid-feedback'])
+
+            ->addLabelFor('author', 'Author :')
             ->addInput('text', 'author', [
                 'id' => 'author',
-                'class' => 'form-control', 'value' => $this->global->getPost('author') ?? $this->global->setSession
-                    ('user', 'username')
+                'value' => $this->getData()['author'] ?? '',
+                'class' => $this->errors['author'] ? 'form-control is-invalid' : 'form-control',
             ])
+            ->addSpan($this->errors['author'] ?? '', ['class' => 'invalid-feedback'])
+
             ->addLabelFor('chapo', 'Chap :')
-            ->addTextArea('chapo', $this->global->getPost('chapo'), [
+            ->addTextArea('chapo', $this->getData()['chapo'], [
                 'id' => 'chapo',
-                'class' => 'form-control',
+                'class' => $this->errors['chapo'] ? 'form-control is-invalid' : 'form-control',
             ])
+            ->addSpan($this->errors['chapo'] ?? '', ['class' => 'invalid-feedback'])
+
             ->addLabelFor('content', 'Content :')
-            ->addTextArea('content', $this->global->getPost('content'), [
+            ->addTextArea('content', $this->getData()['content'], [
                 'id' => 'content',
-                'class' => 'form-control',
+                'class' => $this->errors['content'] ? 'form-control is-invalid' : 'form-control',
             ])
+            ->addSpan($this->errors['content'] ?? '', ['class' => 'invalid-feedback'])
+
             ->addButton('Submit', [
                 'class' => 'btn btn-primary mt-3 w-100'
             ])
@@ -55,19 +67,21 @@ class AddPostForm extends Form
      */
     public function isValid(): bool
     {
-        if (empty($this->global->getPost('title'))) {
-            $this->errors .= 'The title is required';
+        $data = $this->getData();
+
+        if (empty($data['title'])) {
+            $this->errors['title'] = 'Title is required';
         }
-        if (empty($this->global->getPost('author'))) {
-            $this->errors .= 'Author is required';
+        if (empty($data['author'])) {
+            $this->errors['author'] = 'Author is required';
         }
-        if (empty($this->global->getPost('chapo'))) {
-            $this->errors .= 'Chapo is required';
+        if (empty($data['chapo'])) {
+            $this->errors['chapo'] = 'Chapo is required';
         }
-        if (empty($this->global->getPost('content'))) {
-            $this->errors .= 'Content is required';
+        if (empty($data['content'])) {
+            $this->errors['content'] = 'Content is required';
         }
-        return empty($this->errors);
+        return empty($this->errors['title']) && empty($this->errors['author']) && empty($this->errors['chapo']) && empty($this->errors['content']);
     }
 
     /**

@@ -54,7 +54,7 @@ class PostController extends Controller
     {
         $addPostForm = new AddPostForm();
 
-        if (!$addPostForm->isSubmitted()) {
+        if ($addPostForm->isSubmitted()) {
             if ($addPostForm->isValid()) {
                 $data = $addPostForm->getData();
                 $post = new Post($data);
