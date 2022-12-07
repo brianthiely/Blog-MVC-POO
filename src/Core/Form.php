@@ -23,13 +23,12 @@ abstract class Form extends Controller
      */
     public function isSubmitted(): bool
     {
-        return $this->global->isPost('submit');
+        return !empty($this->global->getPost());
     }
 
     /**
-     * Validate if all the fields proposed are filled
-     * @param array $form Form table (_$POST, $_GET)
-     * @param array $fields Array listing the mandatory fields
+     * @param array $form
+     * @param array $fields
      * @return bool
      */
     public static function validate(array $form, array $fields): bool
@@ -41,6 +40,8 @@ abstract class Form extends Controller
         }
         return true;
     }
+
+
 
     /**
      * Add the attributes sent to the tag
@@ -145,6 +146,19 @@ abstract class Form extends Controller
         $this->formCode .= '<button ';
         $this->formCode .= $attributes ? $this->addAttributes($attributes) : '';
         $this->formCode .= ">$text</button>";
+        return $this;
+    }
+
+    /**
+     * @param string $text
+     * @param array $attributes
+     * @return $this
+     */
+    public function addSpan(string $text, array $attributes = []): self
+    {
+        $this->formCode .= '<span ';
+        $this->formCode .= $attributes ? $this->addAttributes($attributes) : '';
+        $this->formCode .= ">$text</span>";
         return $this;
     }
 }

@@ -39,7 +39,7 @@ class Mailer
     {
         $from = (new Globals())->getEnv('MAILER_USERNAME');
         $this->mailer->setFrom($from, 'Mailer');
-        $this->mailer->Subject = 'Contact';
+        $this->mailer->Subject = 'Contact ' . $data['name'];
         foreach ($data as $key => $value) {
             $this->mailer->Body .= '<p><strong>' . $key . ':</strong> ' . $value . '</p> </br>';
         }

@@ -5,10 +5,10 @@ namespace App\Controllers;
 
 use App\Mailer\Mailer;
 use Exception;
+use App\Form\ContactForm;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use App\Form\ContactForm;
 
 class MainController extends Controller
 {
@@ -24,25 +24,33 @@ class MainController extends Controller
     public function index(): void
     {
         $contactForm = new ContactForm();
-        if (!$contactForm->isSubmitted()) {
+
+        if ($contactForm->isSubmitted()) {
             if ($contactForm->isValid()) {
-                $data = $contactForm->getData();
-                $mailer = new Mailer($this->global->getEnv('MAILER_HOST'), $this->global->getEnv('MAILER_USERNAME'),
-                    $this->global->getEnv('MAILER_PASSWORD'), $this->global->getEnv('MAILER_PORT'));
-                $mailer->send($data);
-                $this->global->setSession('message', 'Your message has been sent');
+                $this->sendMail($contactForm);
                 $this->redirect('/');
             }
-            $this->global->setSession('errors', $contactForm->getErrors());
         }
 
 
         try {
             $this->twig->display('main/index.html.twig', [
-                'contactForm' => $contactForm->getForm()
+                'contactForm' => $contactForm->getForm(),
             ]);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             throw new Exception($e->getMessage());
         }
+    }
+
+
+    /**
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
+    private function sendMail(ContactForm $contactForm): void
+    {
+        $data = $contactForm->getData();
+        $mailer = new Mailer($this->global->getEnv('MAILER_HOST'), $this->global->getEnv('MAILER_USERNAME'),
+            $this->global->getEnv('MAILER_PASSWORD'), $this->global->getEnv('MAILER_PORT'));
+        $mailer->send($data);
     }
 }

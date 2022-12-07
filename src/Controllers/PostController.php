@@ -63,7 +63,6 @@ class PostController extends Controller
                 $this->global->setSession('message', 'Your post has been added');
                 $this->redirect('/post');
             }
-            $this->global->setSession('errors', $addPostForm->getErrors());
         }
 
         try {

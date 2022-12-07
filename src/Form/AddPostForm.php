@@ -7,7 +7,7 @@ use App\Core\Form;
 
 class AddPostForm extends Form
 {
-    private ?string $errors = null;
+    private array $errors = [];
 
     public function __construct()
     {
@@ -84,9 +84,9 @@ class AddPostForm extends Form
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getErrors(): string
+    public function getErrors(): array
     {
         return $this->errors;
     }
