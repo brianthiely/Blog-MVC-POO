@@ -27,7 +27,9 @@ class MainController extends Controller
 
         if ($contactForm->isSubmitted()) {
             if ($contactForm->isValid()) {
-                $this->sendMail($contactForm);
+                $data = $contactForm->getData();
+                $this->sendMail($data);
+                $this->global->setSession('message', 'Your message has been sent');
                 $this->redirect('/');
             }
         }
@@ -46,9 +48,8 @@ class MainController extends Controller
     /**
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function sendMail(ContactForm $contactForm): void
+    private function sendMail($data): void
     {
-        $data = $contactForm->getData();
         $mailer = new Mailer($this->global->getEnv('MAILER_HOST'), $this->global->getEnv('MAILER_USERNAME'),
             $this->global->getEnv('MAILER_PASSWORD'), $this->global->getEnv('MAILER_PORT'));
         $mailer->send($data);

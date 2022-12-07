@@ -8,10 +8,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-require_once ROOT . '/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-require_once ROOT . '/vendor/phpmailer/phpmailer/src/SMTP.php';
-require_once ROOT . '/vendor/phpmailer/phpmailer/src/Exception.php';
-
 class Mailer
 {
     private PHPMailer $mailer;
