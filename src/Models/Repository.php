@@ -77,4 +77,5 @@ class Repository extends BaseEntity
         $table = $this->getTable();
         return $this->request("SELECT *, DATE_FORMAT(createdAt, '%d/%m/%Y at %Hh%i') AS created_fr, DATE_FORMAT(updatedAt, '%d/%m/%Y at %Hh%i') AS updated_fr FROM $table WHERE id = ?", [$id])->fetch();
     }
+
 }

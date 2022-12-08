@@ -98,11 +98,4 @@ class AddPostForm extends Form
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
-    }
 }

@@ -1,10 +1,8 @@
 {% extends 'default.html.twig' %}
 
 {% block body %}
-
     <article class="blog-post mt-5 col-8 m-auto" xmlns="http://www.w3.org/1999/html">
         <small class="blog-post-meta">Written by {{ post.author }} </small>
-        </br>
 
         {% if (post.updatedAt) %}
             <small class="text-muted mb-5">Updated on {{ post.updated_fr }}</small>
@@ -13,9 +11,8 @@
         {% endif %}
 
         <h1 class="blog-post-title mb-5 text-center">{{ post.title }}</h1>
-
-
             {{ post.content | raw }}
-
     </article>
+
+    {% include 'comments/index.html.twig'  %}
 {% endblock %}
