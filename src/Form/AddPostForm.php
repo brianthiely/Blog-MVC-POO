@@ -89,11 +89,12 @@ class AddPostForm extends Form
      */
     public function getData(): array
     {
+        $contentClean = htmlentities($this->global->getPost('content'));
         return [
             'title' => strip_tags($this->global->getPost('title')),
             'author' => strip_tags($this->global->getPost('author')),
             'chapo' => strip_tags($this->global->getPost('chapo')),
-            'content' => strip_tags($this->global->getPost('content')),
+            'content' => html_entity_decode($contentClean),
         ];
     }
 

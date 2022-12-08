@@ -14,7 +14,7 @@ class Mailer
 
     public function __construct(string $MAILER_HOST, string $MAILER_USERNAME, string $MAILER_PASSWORD, string $MAILER_PORT)
     {
-        $this->mailer = new \PHPMailer\PHPMailer\PHPMailer();
+        $this->mailer = new PHPMailer();
         $this->mailer->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
         $this->mailer->isSMTP();
         $this->mailer->Host = $MAILER_HOST;

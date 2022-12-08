@@ -113,8 +113,8 @@ abstract class Form extends Controller
     public function addTextarea(string $name, string $value = '', array $attributes = []): self
     {
         $this->formCode .= "<textarea name='$name'";
-        $this->formCode .= $attributes ? $this->addAttributes($attributes) : '';
-        $this->formCode .= ">$value</textarea>";
+        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' : '>';
+        $this->formCode .= $value . '</textarea>';
         return $this;
     }
 
