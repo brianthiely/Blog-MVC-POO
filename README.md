@@ -11,15 +11,10 @@ Le fichier .env.exemple contient les paramètres de connexion à la base de donn
 
 ## Fonctionnalités  
 -   Utilisateurs peuvent créer des comptes et se connecter
-
 -   Utilisateurs peuvent envoyer un mail grâce au formulaire de contact
-
 -   Utilisateurs peuvent commenter les articles(modération des commentaires)
-
 -   Administration intégrée pour gérer les utilisateurs
-
 -   Administrateurs peuvent créer, modifier et supprimer des articles
-
 -   Administrateurs peuvent valider ou supprimer les commentaires
 
 ## Contribution
