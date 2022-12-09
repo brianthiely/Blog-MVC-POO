@@ -56,8 +56,9 @@ class Main extends Controller
         $controller = new MainController;
         try {
             $controller->index();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new Exception($e->getMessage());
         }
     }
 }
+

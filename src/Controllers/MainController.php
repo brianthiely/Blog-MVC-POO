@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use PHPMailer\PHPMailer\Exception;
+use App\Mailer\Mailer;
+use Exception;
+use App\Form\ContactForm;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use App\Form\ContactForm;
 
 class MainController extends Controller
 {
@@ -24,31 +25,33 @@ class MainController extends Controller
     {
         $contactForm = new ContactForm();
 
-        // is the form submitted ?
-        if (!$contactForm->isSubmitted()) {
-            // is the form valid ?
+        if ($contactForm->isSubmitted()) {
             if ($contactForm->isValid()) {
-                // check if email is valid
-                if ($contactForm->isEmailValid()){
-                    // Check if phone number is valid
-                    if ($contactForm->isPhoneValid()) {
-                        $contactForm->sendForm();
-                        $this->global->setSession('message', 'Your message has been sent');
-                        $this->redirect('/');
-                    }
-                    $this->global->setSession('message', $contactForm->getErrors());
-                }
-                $this->global->setSession('message', $contactForm->getErrors());
+                $data = $contactForm->getData();
+                $this->sendMail($data);
+                $this->global->setSession('message', 'Your message has been sent');
+                $this->redirect('/');
             }
-            $this->global->setSession('message', $contactForm->getErrors());
         }
+
 
         try {
             $this->twig->display('main/index.html.twig', [
-                'contactForm' => $contactForm->getForm()
+                'contactForm' => $contactForm->getForm(),
             ]);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             throw new Exception($e->getMessage());
         }
+    }
+
+
+    /**
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
+    private function sendMail($data): void
+    {
+        $mailer = new Mailer($this->global->getEnv('MAILER_HOST'), $this->global->getEnv('MAILER_USERNAME'),
+            $this->global->getEnv('MAILER_PASSWORD'), $this->global->getEnv('MAILER_PORT'));
+        $mailer->send($data);
     }
 }

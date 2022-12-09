@@ -8,7 +8,7 @@ use PDOException;
 
 class Db extends PDO
 {
-    private static $instance;
+    private static ?Db $instance = null;
 
     private const HOST = 'localhost';
     private const USER = 'root';
@@ -43,3 +43,4 @@ class Db extends PDO
         return self::$instance;
     }
 }
+

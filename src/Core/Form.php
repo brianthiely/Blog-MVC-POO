@@ -23,23 +23,7 @@ abstract class Form extends Controller
      */
     public function isSubmitted(): bool
     {
-        return $this->global->isPost('submit');
-    }
-
-    /**
-     * Validate if all the fields proposed are filled
-     * @param array $form Form table (_$POST, $_GET)
-     * @param array $fields Array listing the mandatory fields
-     * @return bool
-     */
-    public static function validate(array $form, array $fields): bool
-    {
-        foreach ($fields as $field) {
-            if (empty($form[$field])) {
-                return false;
-            }
-        }
-        return true;
+        return !empty($this->global->getPost());
     }
 
     /**
@@ -129,8 +113,8 @@ abstract class Form extends Controller
     public function addTextarea(string $name, string $value = '', array $attributes = []): self
     {
         $this->formCode .= "<textarea name='$name'";
-        $this->formCode .= $attributes ? $this->addAttributes($attributes) : '';
-        $this->formCode .= ">$value</textarea>";
+        $this->formCode .= $attributes ? $this->addAttributes($attributes) . '>' : '>';
+        $this->formCode .= $value . '</textarea>';
         return $this;
     }
 
@@ -147,4 +131,18 @@ abstract class Form extends Controller
         $this->formCode .= ">$text</button>";
         return $this;
     }
+
+    /**
+     * @param string $text
+     * @param array $attributes
+     * @return $this
+     */
+    public function addSpan(string $text, array $attributes = []): self
+    {
+        $this->formCode .= '<span ';
+        $this->formCode .= $attributes ? $this->addAttributes($attributes) : '';
+        $this->formCode .= ">$text</span>";
+        return $this;
+    }
 }
+

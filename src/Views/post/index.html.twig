@@ -17,7 +17,7 @@
             <div class="col-md-5 ">
                 <article class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
-                        <h3 class="font-bold">
+                        <h3 class="font-bold text-center mb-3">
                             {{ post.title }}
                         </h3>
                         {% if (post.updatedAt) %}
@@ -25,8 +25,8 @@
                         {% else %}
                         <div class="mb-1 text-muted"> Added {{ post.created_fr}} </div>
                         {% endif %}
-                        <p class="card-text mb-auto">{{ post.chapo }}</p>
-                        <a href="/post/read/{{ post.id }}" class="stretched-link">Read article</a>
+                        <p class="card-text mb-auto mt-3">{{ post.chapo }}</p>
+                        <a href="/post/read/{{ post.id }}" class="stretched-link mt-3">Read article</a>
                     </div>
                 </article>
             </div>
