@@ -78,4 +78,26 @@ class Repository extends BaseEntity
         return $this->request("SELECT *, DATE_FORMAT(createdAt, '%d/%m/%Y at %Hh%i') AS created_fr, DATE_FORMAT(updatedAt, '%d/%m/%Y at %Hh%i') AS updated_fr FROM $table WHERE id = ?", [$id])->fetch();
     }
 
+    /**
+     * @param array $params
+     * @return bool|array
+     */
+    public function fetchBy(array $params): bool|array
+    {
+        $table = $this->getTable();
+
+        // On récupère les clés du tableau
+        $fields = array_map(function ($field) {
+            return "$field = :$field";
+        }, array_keys($params));
+
+        // On transforme le tableau "champs" en une chaine de caractères
+        $fields_list = implode(' AND ', $fields);
+
+        // On prépare la requête en ordre decroissant
+        $query = $this->request("SELECT *, DATE_FORMAT(createdAt, '%d/%m/%Y at %Hh%i') AS created_fr, DATE_FORMAT(updatedAt, '%d/%m/%Y at %Hh%i') AS updated_fr FROM $table WHERE $fields_list ORDER BY createdAt DESC", $params);
+
+        return $query->fetchAll();
+    }
+
 }

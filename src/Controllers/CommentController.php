@@ -21,14 +21,12 @@ class CommentController extends Controller
      */
     public function addComment(int $id): string
     {
-
         $commentForm = new AddCommentForm();
 
         if ($commentForm->isSubmitted()) {
             if ($commentForm->isValid()) {
                 $data = $commentForm->getData();
                 $comment = new Comment($data, $id);
-                var_dump($data);
                 $commentRepository = new CommentRepository();
                 $commentRepository->save($comment);
                 $this->global->setSession('message', 'Your comment has been sent');
@@ -37,4 +35,6 @@ class CommentController extends Controller
         }
         return $commentForm->getForm();
     }
+
+
 }

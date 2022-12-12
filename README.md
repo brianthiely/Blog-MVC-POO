@@ -5,7 +5,7 @@ Pour installer ce projet, vous aurez besoin
 - d'un serveur web local (comme XAMPP ou WAMP)
 - une base de données MySQL. 
 
-Une fois le serveur en cours d'exécution, clonez ce dépôt GitHub sur votre ordinateur 
+Une fois le serveur en cours d'exécution, clonez ce dépôt GitHub sur votre ordinateur
 
 Le fichier .env.exemple contient les paramètres de connexion à la base de données, veuillez les modifier si nécessaire.
 

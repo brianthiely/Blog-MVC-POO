@@ -40,10 +40,11 @@ class PostController extends Controller
     public function read(int $id)
     {
         $post = (new PostRepository())->getPost($id);
+        $comments =(new CommentRepository())->getComments($id);
         $commentForm = (new CommentController())->addComment($id);
 
         try {
-            $this->twig->display('post/read.html.twig', compact('post',)
+            $this->twig->display('post/read.html.twig', compact('post','comments')
                 + ['addCommentForm' => $commentForm]);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             throw new Exception($e->getMessage());
