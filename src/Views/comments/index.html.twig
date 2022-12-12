@@ -13,7 +13,7 @@
                         <div class=" collapse navbar-collapse mb-4" id="buttonCommentDropdown">
                             {% include('comments/add.html.twig') %}
                         </div>
-                        {% for comments in comment %}
+                        {% for comment in comments %}
                             {% include('comments/read.html.twig') %}
                         {% endfor %}
                     </div>
