@@ -37,7 +37,6 @@ class MainController extends Controller
         ]);
     }
 
-
     /**
      * @throws \PHPMailer\PHPMailer\Exception
      */

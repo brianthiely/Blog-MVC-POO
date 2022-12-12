@@ -4,14 +4,11 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Core\Form;
+use App\Globals\GlobalsFactory;
 
 class ContactForm extends Form
 {
     private array $errors = [];
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * @return string
@@ -128,12 +125,12 @@ public function isValid(): bool
      */
     public function getData(): array
     {
+        $global = GlobalsFactory::getInstance()->createGlobals();
         return [
-            'name' => strip_tags($this->global->getPost('name')),
-            'mail' => strip_tags($this->global->getPost('mail')),
-            'phone' => strip_tags($this->global->getPost('phone')),
-            'message' => strip_tags($this->global->getPost('message')),
+            'name' => strip_tags($global->getPost('name')),
+            'mail' => strip_tags($global->getPost('mail')),
+            'phone' => strip_tags($global->getPost('phone')),
+            'message' => strip_tags($global->getPost('message')),
         ];
     }
-
 }

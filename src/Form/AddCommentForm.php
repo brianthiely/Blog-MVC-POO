@@ -4,15 +4,11 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Core\Form;
+use App\Globals\GlobalsFactory;
 
 class AddCommentForm extends Form
 {
     private array $errors = [];
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * @return string
@@ -48,9 +44,10 @@ class AddCommentForm extends Form
      */
     public function getData(): array
     {
+        $global = GlobalsFactory::getInstance()->createGlobals();
         return [
-            'content' => strip_tags($this->global->getPost('content') ?? ''),
-            'user_id' => $this->global->getSession('user')['id'] ?? '',
+            'content' => strip_tags($global->getPost('content') ?? ''),
+            'user_id' => $global->getSession('user')['id'] ?? '',
             'author' => 'Anonymous',
         ];
     }

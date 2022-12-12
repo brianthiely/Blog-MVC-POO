@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Core;
 
-use App\Controllers\Controller;
+use App\Globals\GlobalsFactory;
 
-abstract class Form extends Controller
+abstract class Form
 {
     private string $formCode = '';
 
@@ -23,7 +23,8 @@ abstract class Form extends Controller
      */
     public function isSubmitted(): bool
     {
-        return !empty($this->global->getPost());
+        $global = GlobalsFactory::getInstance()->createGlobals();
+        return !empty($global->getPost());
     }
 
     /**

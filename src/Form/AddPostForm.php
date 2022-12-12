@@ -4,15 +4,11 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Core\Form;
+use App\Globals\GlobalsFactory;
 
 class AddPostForm extends Form
 {
     private array $errors = [];
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * @return string
@@ -84,11 +80,12 @@ class AddPostForm extends Form
      */
     public function getData(): array
     {
-        $contentClean = htmlentities($this->global->getPost('content'));
+        $global = GlobalsFactory::getInstance()->createGlobals();
+        $contentClean = htmlentities($global->getPost('content'));
         return [
-            'title' => strip_tags($this->global->getPost('title')),
-            'author' => strip_tags($this->global->getPost('author')),
-            'chapo' => strip_tags($this->global->getPost('chapo')),
+            'title' => strip_tags($global->getPost('title')),
+            'author' => strip_tags($global->getPost('author')),
+            'chapo' => strip_tags($global->getPost('chapo')),
             'content' => html_entity_decode($contentClean),
         ];
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Globals\Globals;
+use App\Globals\GlobalsFactory;
 use JetBrains\PhpStorm\NoReturn;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -18,7 +19,7 @@ abstract class Controller
    {
         $this->loader = New FilesystemLoader(ROOT . '/src/Views');
         $this->twig = new Environment($this->loader);
-        $this->global = new Globals();
+        $this->global = GlobalsFactory::getInstance()->createGlobals();
    }
 
     /**
