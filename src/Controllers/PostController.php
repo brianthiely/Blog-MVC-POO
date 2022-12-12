@@ -8,10 +8,6 @@ use App\Models\CommentRepository;
 use App\Models\Post;
 use App\Models\PostRepository;
 use Exception;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-
 
 class PostController extends Controller
 {
@@ -26,12 +22,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = (new PostRepository())->getPosts();
-
-        try {
-            $this->twig->display('post/index.html.twig', compact('posts'));
-        } catch (LoaderError|RuntimeError|SyntaxError $e) {
-            throw new Exception($e->getMessage());
-        }
+        $this->twig->display('post/index.html.twig', compact('posts'));
     }
 
     /**
@@ -43,12 +34,8 @@ class PostController extends Controller
         $comments =(new CommentRepository())->getComments($id);
         $commentForm = (new CommentController())->addComment($id);
 
-        try {
-            $this->twig->display('post/read.html.twig', compact('post','comments')
-                + ['addCommentForm' => $commentForm]);
-        } catch (LoaderError|RuntimeError|SyntaxError $e) {
-            throw new Exception($e->getMessage());
-        }
+        $this->twig->display('post/read.html.twig', compact('post','comments')
+            + ['addCommentForm' => $commentForm]);
     }
 
     /**
@@ -68,13 +55,8 @@ class PostController extends Controller
                 $this->redirect('/post');
             }
         }
-
-        try {
-            $this->twig->display('post/add.html.twig', [
-                'addPostForm' => $addPostForm->getForm()
-            ]);
-        } catch (LoaderError|RuntimeError|SyntaxError $e) {
-            throw new Exception($e->getMessage());
-        }
+        $this->twig->display('post/add.html.twig', [
+            'addPostForm' => $addPostForm->getForm()
+        ]);
     }
 }

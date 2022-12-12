@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -35,6 +36,4 @@ class CommentController extends Controller
         }
         return $commentForm->getForm();
     }
-
-
 }
