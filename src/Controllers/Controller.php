@@ -14,12 +14,10 @@ abstract class Controller
    protected Environment $twig;
    protected Globals $global;
 
-
     public function __construct()
    {
         $this->loader = New FilesystemLoader(ROOT . '/src/Views');
         $this->twig = new Environment($this->loader);
-
         $this->global = new Globals();
    }
 
@@ -32,4 +30,3 @@ abstract class Controller
         header('Location: ' . $page);
     }
 }
-

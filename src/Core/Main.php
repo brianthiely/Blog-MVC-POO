@@ -5,18 +5,19 @@ namespace App\Core;
 
 use App\Controllers\Controller;
 use App\Controllers\MainController;
+use App\Models\Session;
 use PHPMailer\PHPMailer\Exception;
 
 class Main extends Controller
 {
     /**
      * @return string|void
-     * @throws Exception
+     * @throws \Exception
      */
     public function start()
     {
-        session_start();
-
+        $session = new Session();
+        $session->startSession();
 
         $get = $this->global->getGet();
         $uri = $this->global->getUri();

@@ -7,12 +7,7 @@ use App\Core\Form;
 
 class ContactForm extends Form
 {
-    private array $errors = [
-        'name' => '',
-        'mail' => '',
-        'phone' => '',
-        'message' => '',
-    ];
+    private array $errors = [];
     public function __construct()
     {
         parent::__construct();
@@ -28,7 +23,7 @@ class ContactForm extends Form
             ->addInput('text', 'name', [
                 'id' => 'name',
                 'value' => $this->getData()['name'] ?? '',
-                'class' => $this->errors['name'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['name']) ? 'form-control is-invalid' : 'form-control'),
             ])
             ->addSpan($this->errors['name'] ?? '', ['class' => 'invalid-feedback'])
 
@@ -36,7 +31,7 @@ class ContactForm extends Form
             ->addInput('text', 'mail', [
                 'id' => 'mail',
                 'value' => $this->getData()['mail'] ?? '',
-                'class' => $this->errors['mail'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['mail'])) ? 'form-control is-invalid' : 'form-control',
             ])
             ->addSpan($this->errors['mail'] ?? '', ['class' => 'invalid-feedback'])
 
@@ -44,14 +39,14 @@ class ContactForm extends Form
             ->addInput('text', 'phone', [
                 'id' => 'phone',
                 'value' => $this->getData()['phone'] ?? '',
-                'class' => $this->errors['phone'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['phone'])) ? 'form-control is-invalid' : 'form-control',
             ])
             ->addSpan($this->errors['phone'] ?? '', ['class' => 'invalid-feedback'])
 
             ->addLabelFor('message', 'Message :')
             ->addTextArea('message', $this->getData()['message'] ?? '',[
                 'id' => 'content',
-                'class' => $this->errors['message'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['message'])) ? 'form-control is-invalid' : 'form-control',
             ])
             ->addSpan($this->errors['message'] ?? '', ['class' => 'invalid-feedback'])
 
@@ -91,7 +86,7 @@ public function isValid(): bool
     if (empty($data['message'])) {
         $this->errors['message'] = 'The message is required';
     }
-    return empty($this->errors['name']) && empty($this->errors['mail']) && empty($this->errors['phone']) && empty($this->errors['message']);
+    return empty($this->errors);
 }
 
     /**
@@ -99,6 +94,9 @@ public function isValid(): bool
      */
     public function isEmailValid(): bool
     {
+        if(empty($this->getData()['mail'])) {
+            return true;
+        }
         if (!filter_var($this->getData()['mail'], FILTER_VALIDATE_EMAIL)) {
             return false;
         }
@@ -110,6 +108,9 @@ public function isValid(): bool
      */
     public function isPhoneValid(): bool
     {
+        if(empty($this->getData()['phone'])) {
+            return true;
+        }
         // allow +, - and . and () in phone number
         $filtered_phone = filter_var($this->getData()['phone'], FILTER_SANITIZE_NUMBER_INT);
         // Remove "-" from number

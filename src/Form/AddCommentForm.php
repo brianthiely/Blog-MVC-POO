@@ -7,9 +7,7 @@ use App\Core\Form;
 
 class AddCommentForm extends Form
 {
-    private array $errors = [
-        'content' => '',
-    ];
+    private array $errors = [];
 
     public function __construct()
     {
@@ -25,7 +23,7 @@ class AddCommentForm extends Form
             ->addLabelFor('content', 'Comment :')
             ->addTextArea('content', $this->getData()['content'] ?? '', [
                 'id' => 'content',
-                'class' => $this->errors['content'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['content'])) ? 'form-control is-invalid' : 'form-control',
             ])
             ->addSpan($this->errors['content'] ?? '', ['class' => 'invalid-feedback'])
             ->addButton('Submit', [

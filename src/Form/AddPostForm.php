@@ -7,12 +7,7 @@ use App\Core\Form;
 
 class AddPostForm extends Form
 {
-    private array $errors = [
-        'title' => '',
-        'author' => '',
-        'chapo' => '',
-        'content' => '',
-    ];
+    private array $errors = [];
 
     public function __construct()
     {
@@ -29,7 +24,7 @@ class AddPostForm extends Form
             ->addInput('text', 'title', [
                 'id' => 'title',
                 'value' => $this->getData()['title'] ?? '',
-                'class' => $this->errors['title'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['title'])) ? 'form-control is-invalid' : 'form-control',
             ])
             ->addSpan($this->errors['title'] ?? '', ['class' => 'invalid-feedback'])
 
@@ -37,21 +32,21 @@ class AddPostForm extends Form
             ->addInput('text', 'author', [
                 'id' => 'author',
                 'value' => $this->getData()['author'] ?? '',
-                'class' => $this->errors['author'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['author'])) ? 'form-control is-invalid' : 'form-control',
             ])
             ->addSpan($this->errors['author'] ?? '', ['class' => 'invalid-feedback'])
 
             ->addLabelFor('chapo', 'Chap :')
             ->addTextArea('chapo', $this->getData()['chapo'], [
                 'id' => 'chapo',
-                'class' => $this->errors['chapo'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['chapo'])) ? 'form-control is-invalid' : 'form-control',
             ])
             ->addSpan($this->errors['chapo'] ?? '', ['class' => 'invalid-feedback'])
 
             ->addLabelFor('content', 'Content :')
             ->addTextArea('content', $this->getData()['content'], [
                 'id' => 'content',
-                'class' => $this->errors['content'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['content'])) ? 'form-control is-invalid' : 'form-control',
             ])
             ->addSpan($this->errors['content'] ?? '', ['class' => 'invalid-feedback'])
 
@@ -81,7 +76,7 @@ class AddPostForm extends Form
         if (empty($data['content'])) {
             $this->errors['content'] = 'Content is required';
         }
-        return empty($this->errors['title']) && empty($this->errors['author']) && empty($this->errors['chapo']) && empty($this->errors['content']);
+        return empty($this->errors);
     }
 
     /**
