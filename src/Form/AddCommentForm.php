@@ -4,28 +4,24 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Core\Form;
+use App\Globals\GlobalsFactory;
+use App\Services\Session;
 
 class AddCommentForm extends Form
 {
-    private array $errors = [
-        'content' => '',
-    ];
+    private array $errors = [];
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * @return string
      */
-    public function getForm(): string
+    public function createForm(): string
     {
         $this->startForm()
             ->addLabelFor('content', 'Comment :')
             ->addTextArea('content', $this->getData()['content'] ?? '', [
                 'id' => 'content',
-                'class' => $this->errors['content'] ? 'form-control is-invalid' : 'form-control',
+                'class' => (isset($this->errors['content'])) ? 'form-control is-invalid' : 'form-control',
             ])
             ->addSpan($this->errors['content'] ?? '', ['class' => 'invalid-feedback'])
             ->addButton('Submit', [
@@ -36,24 +32,25 @@ class AddCommentForm extends Form
         return $this->create();
     }
 
-    public function isValid(): bool
-    {
-        if (empty($this->getData()['content'])) {
-            $this->errors['content'] = 'You cannot send an empty comment';
-            return false;
-        }
-        return true;
-    }
-
     /**
      * @return array
      */
     public function getData(): array
     {
+        $globals = GlobalsFactory::getInstance()->createGlobals();
         return [
-            'content' => strip_tags($this->global->getPost('content') ?? ''),
-            'user_id' => $this->global->getSession('user')['id'] ?? '',
-            'author' => 'Anonymous',
+            'content' => $globals->getPost('content'),
+            'author' => Session::get('user', 'username'),
+            'user_id' => Session::get('user', 'id'),
+            'visibility' => (Session::get('user', 'roles') === 'admin') ? 1 : 0,
         ];
+    }
+
+    public function isValid(): bool
+    {
+        if (empty($this->getData()['content'])) {
+            $this->errors['content'] = 'Please enter a comment';
+        }
+        return empty($this->errors);
     }
 }

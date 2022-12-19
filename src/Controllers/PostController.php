@@ -7,11 +7,9 @@ use App\Form\AddPostForm;
 use App\Models\CommentRepository;
 use App\Models\Post;
 use App\Models\PostRepository;
+use App\Services\Flash;
+use App\Services\Session;
 use Exception;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-
 
 class PostController extends Controller
 {
@@ -26,36 +24,39 @@ class PostController extends Controller
     public function index()
     {
         $posts = (new PostRepository())->getPosts();
-
-        try {
-            $this->twig->display('post/index.html.twig', compact('posts'));
-        } catch (LoaderError|RuntimeError|SyntaxError $e) {
-            throw new Exception($e->getMessage());
-        }
+        $user = Session::get('user');
+        $this->twig->display('post/index.html.twig', compact('posts', 'user'));
     }
 
     /**
      * @throws Exception
      */
-    public function read(int $id)
+    public function read(int $postId)
     {
-        $post = (new PostRepository())->getPost($id);
-        $comments =(new CommentRepository())->getComments($id);
-        $commentForm = (new CommentController())->addComment($id);
-
-        try {
-            $this->twig->display('post/read.html.twig', compact('post','comments')
-                + ['addCommentForm' => $commentForm]);
-        } catch (LoaderError|RuntimeError|SyntaxError $e) {
-            throw new Exception($e->getMessage());
+        $user = Session::get('user');
+        if (!$user) {
+            Flash::set('error', 'You must be logged in to read a post');
+            $this->redirect('/post');
         }
+        $post = (new PostRepository())->getPost($postId);
+        $comments =(new CommentRepository())->getComments($postId);
+        $commentController = new CommentController();
+        $commentForm = $commentController->addComment($postId);
+
+        $this->twig->display('post/read.html.twig', compact('post','comments')
+            + ['addCommentForm' => $commentForm]);
     }
+
 
     /**
      * @throws Exception
      */
     public function add(): void
     {
+        if (!Session::get('user') || Session::get('user', 'roles') !== 'admin') {
+            Flash::set('error', 'Access denied');
+            $this->redirect('/post');
+        }
         $addPostForm = new AddPostForm();
 
         if ($addPostForm->isSubmitted()) {
@@ -64,17 +65,12 @@ class PostController extends Controller
                 $post = new Post($data);
                 $postRepository = new PostRepository;
                 $postRepository->save($post);
-                $this->global->setSession('message', 'Your post has been added');
+                Flash::set('success', 'Post added successfully');
                 $this->redirect('/post');
             }
         }
-
-        try {
-            $this->twig->display('post/add.html.twig', [
-                'addPostForm' => $addPostForm->getForm()
-            ]);
-        } catch (LoaderError|RuntimeError|SyntaxError $e) {
-            throw new Exception($e->getMessage());
-        }
+        $this->twig->display('post/add.html.twig', [
+            'addPostForm' => $addPostForm->createForm()
+        ]);
     }
 }

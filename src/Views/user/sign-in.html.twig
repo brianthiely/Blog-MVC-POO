@@ -1,0 +1,12 @@
+{% extends "default.html.twig" %}
+{% block body %}
+    <main xmlns="http://www.w3.org/1999/html">
+        <h1 class="text-center mt-5">Sign-in</h1>
+        <div class="w-50 m-auto">
+            {{ signInForm | raw }}
+        </div>
+        <div class="text-center mt-3 mb-5">
+            <a href="/user/register"> Don't have account ? Sign-up </a>
+        </div>
+    </main>
+{% endblock %}

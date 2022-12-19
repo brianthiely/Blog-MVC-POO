@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use DateTime;
 use Exception;
 
 class Comment extends BaseEntity
@@ -13,16 +14,15 @@ class Comment extends BaseEntity
     protected string $author;
     protected string $content;
     protected int $visibility;
-    protected string $createdAt;
-    protected string $updatedAt;
+    protected DateTime $createdAt;
+    protected ?DateTime $updatedAt;
 
     /**
      * @throws Exception
      */
-    public function __construct(array $data, int $postId)
+    public function __construct(array $data)
     {
         $this->hydrate($data);
-        $this->setPostId($postId);
     }
 
     /**
@@ -44,7 +44,7 @@ class Comment extends BaseEntity
     /**
      * @return int
      */
-    public function getPostId(): int
+    public function getPost_id(): int
     {
         return $this->post_id;
     }
@@ -52,7 +52,7 @@ class Comment extends BaseEntity
     /**
      * @param int $post_id
      */
-    public function setPostId(int $post_id): void
+    public function setPost_id(int $post_id): void
     {
         $this->post_id = $post_id;
     }
@@ -60,7 +60,7 @@ class Comment extends BaseEntity
     /**
      * @return int
      */
-    public function getUserId(): int
+    public function getUser_id(): int
     {
         return $this->user_id;
     }
@@ -68,7 +68,7 @@ class Comment extends BaseEntity
     /**
      * @param int $user_id
      */
-    public function setUserId(int $user_id): void
+    public function setUser_id(int $user_id): void
     {
         $this->user_id = $user_id;
     }
@@ -122,33 +122,33 @@ class Comment extends BaseEntity
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @param string $createdAt
+     * @param DateTime $createdAt
      */
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }
 
     /**
-     * @param string $updatedAt
+     * @param DateTime|null $updatedAt
      */
-    public function setUpdatedAt(string $updatedAt): void
+    public function setUpdatedAt(?DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }

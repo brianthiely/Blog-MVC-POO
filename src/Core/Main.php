@@ -3,28 +3,31 @@ declare(strict_types=1);
 
 namespace App\Core;
 
-use App\Controllers\Controller;
 use App\Controllers\MainController;
+use App\Globals\GlobalsFactory;
+use App\Services\Flash;
+use App\Services\Session;
 use PHPMailer\PHPMailer\Exception;
 
-class Main extends Controller
+class Main
 {
     /**
      * @return string|void
-     * @throws Exception
+     * @throws \Exception
      */
     public function start()
     {
-        session_start();
+        Session::start();
 
+        $global = GlobalsFactory::getInstance()->createGlobals();
 
-        $get = $this->global->getGet();
-        $uri = $this->global->getUri();
+        $get = $global->getGet();
+        $uri = $global->getUri();
 
         if (!empty($uri) && $uri != '/' && $uri[-1] == '/') {
             $uri = substr($uri, 0, -1);
             http_response_code(301);
-            $this->redirect($uri);
+            header('Location: ' . $uri);
         }
 
         // We manage the url parameters
@@ -61,4 +64,3 @@ class Main extends Controller
         }
     }
 }
-

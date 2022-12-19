@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Mailer\Mailer;
-use Exception;
 use App\Form\ContactForm;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
+use App\Mailer\MailerFactory;
+use App\Services\Flash;
+use Exception;
+
 
 class MainController extends Controller
 {
@@ -29,29 +28,22 @@ class MainController extends Controller
             if ($contactForm->isValid()) {
                 $data = $contactForm->getData();
                 $this->sendMail($data);
-                $this->global->setSession('message', 'Your message has been sent');
+                Flash::set('success', 'Your message has been sent');
                 $this->redirect('/');
             }
         }
 
-
-        try {
-            $this->twig->display('main/index.html.twig', [
-                'contactForm' => $contactForm->getForm(),
-            ]);
-        } catch (LoaderError|RuntimeError|SyntaxError $e) {
-            throw new Exception($e->getMessage());
-        }
+        $this->twig->display('main/index.html.twig', [
+            'contactForm' => $contactForm->getForm(),
+        ]);
     }
-
 
     /**
      * @throws \PHPMailer\PHPMailer\Exception
      */
     private function sendMail($data): void
     {
-        $mailer = new Mailer($this->global->getEnv('MAILER_HOST'), $this->global->getEnv('MAILER_USERNAME'),
-            $this->global->getEnv('MAILER_PASSWORD'), $this->global->getEnv('MAILER_PORT'));
+        $mailer = MailerFactory::getInstance()->createMailer();
         $mailer->send($data);
     }
 }

@@ -7,11 +7,18 @@
     <p class="text-center">
         Find all the articles related to web development.
     </p>
-    <div class="col-md-11 d-flex justify-content-end">
-        <a href="/post/add">
-            <button class="btn btn-primary">Create an article</button>
-        </a>
-    </div>
+
+    {% if user.isAdmin == true %}
+        <div class="col-md-11 d-flex justify-content-end">
+            <a href="/post/add">
+                <button class="btn btn-primary">Create an article</button>
+            </a>
+        </div>
+    {% endif %}
+
+
+
+
     <div class="d-flex flex-wrap justify-content-evenly mt-3 mb-5">
         {% for post in posts %}
             <div class="col-md-5 ">
