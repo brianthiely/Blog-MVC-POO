@@ -100,4 +100,14 @@ class Repository extends BaseEntity
         return $query->fetchAll();
     }
 
+    /**
+     * @param string $field
+     * @param string $value
+     * @return mixed
+     */
+    public function fetchOneBy(string $field, string $value): mixed
+    {
+        $table = $this->getTable();
+        return $this->request("SELECT * FROM $table WHERE $field = ?", [$value])->fetch();
+    }
 }

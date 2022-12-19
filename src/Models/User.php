@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use DateTime;
 use Exception;
 
 class User extends BaseEntity
@@ -12,10 +13,10 @@ class User extends BaseEntity
     protected string $lastname;
     protected string $username;
     protected string $email;
-    protected string $hashPassword;
-    protected string $role;
-    protected string $createdAt;
-    protected string $updatedAt;
+    protected string $password;
+    protected string $roles;
+    protected DateTime $createdAt;
+    protected ?DateTime $updatedAt;
 
 
     /**
@@ -28,17 +29,17 @@ class User extends BaseEntity
 
     public function isAdmin(): bool
     {
-        return $this->getRole() === 'admin';
+        return $this->getRoles() === 'admin';
     }
 
     public function setAdmin(): void
     {
-        $this->setRole('admin');
+        $this->setRoles('admin');
     }
 
     public function isUser(): bool
     {
-        return $this->getRole() === 'user';
+        return $this->getRoles() === 'user';
     }
 
     /**
@@ -121,71 +122,72 @@ class User extends BaseEntity
         $this->email = $email;
     }
 
+    /**
+     * @param string $password
+     * @return bool
+     */
     public function checkPassword(string $password): bool
     {
-        return password_verify($password, $this->hashPassword);
+        return password_verify($password, $this->password);
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function setPasswordWithoutHash(string $password): void
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
     }
 
     /**
      * @return string
      */
-    public function getHashPassword(): string
+    public function getRoles(): string
     {
-        return $this->hashPassword;
+        return $this->roles;
     }
 
     /**
-     * @param string $hashPassword
+     * @param string $roles
      */
-    public function setHashPassword(string $hashPassword): void
+    public function setRoles(string $roles): void
     {
-        $this->hashPassword = $hashPassword;
+        $this->roles = $roles;
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
-    public function getRole(): string
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param string $role
-     */
-    public function setRole(string $role): void
-    {
-        $this->role = $role;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @param string $createdAt
+     * @param DateTime $createdAt
      */
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }
 
     /**
-     * @param string $updatedAt
+     * @param DateTime|null $updatedAt
      */
-    public function setUpdatedAt(string $updatedAt): void
+    public function setUpdatedAt(?DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }

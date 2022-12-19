@@ -8,7 +8,6 @@ class Globals
     private string|array|false $SERVER;
     private string|array|false $POST;
     private string|array|false $ENV;
-    private string|array $SESSION;
 
     public function __construct()
     {
@@ -16,7 +15,6 @@ class Globals
         $this->SERVER = filter_input_array(INPUT_SERVER) ?? '';
         $this->POST = filter_input_array(INPUT_POST) ??'';
         $this->ENV = $_ENV ?? '';
-        $this->SESSION = $_SESSION ?? '';
     }
 
     /**
@@ -62,9 +60,9 @@ class Globals
 
     /**
      * @param string|null $key
-     * @return string|array|false|null
+     * @return bool|array|string|int|null
      */
-    public function getPost(string $key =  null): bool|array|string|null
+    public function getPost(string $key =  null): bool|array|string|int|null
     {
         if (null !== $key) {
             return $this->POST[$key] ?? '';
@@ -89,57 +87,6 @@ class Globals
         return $this->ENV[$key] ?? '';
     }
 
-
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public function isEnv(string $key): bool
-    {
-        return isset($this->ENV[$key]);
-    }
-
-    /**
-     * @param string|null $key
-     * @return string|array
-     */
-    public function getSession(string $key = null): string|array
-    {
-        if (null !== $key) {
-            return $this->SESSION[$key] ?? '';
-        }
-        return $this->SESSION;
-    }
-
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public function isSession(string $key): bool
-    {
-        return isset($this->SESSION[$key]);
-    }
-
-    /**
-     * @param string|null $key
-     * @param string|null $value
-     */
-    public function setSession(string $key = null, string $value = null ): array|string
-    {
-        if (null !== $key && null !== $value) {
-             return $this->SESSION[$key] = $value;
-        }
-        return $this->SESSION;
-    }
-
-    /**
-     * @param string $key
-     * @return void
-     */
-    public function unsetSession(string $key): void
-    {
-        unset($this->SESSION[$key]);
-    }
 
     /**
      * @return string

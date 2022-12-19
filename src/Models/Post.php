@@ -9,13 +9,13 @@ use Exception;
 class Post extends BaseEntity
 {
     protected int $id;
-    protected int $users_id;
+    protected int $user_id;
     protected string $title;
     protected string $author;
     protected string $chapo;
     protected string $content;
     protected DateTime $createdAt;
-    protected DateTime $updatedAt;
+    protected ?DateTime $updatedAt;
 
 
     /**
@@ -45,17 +45,17 @@ class Post extends BaseEntity
     /**
      * @return int
      */
-    public function getUsersId(): int
+    public function getUser_id(): int
     {
-        return $this->users_id;
+        return $this->user_id;
     }
 
     /**
      * @param int $users_id
      */
-    public function setUsersId(int $users_id): void
+    public function setUser_id(int $users_id): void
     {
-        $this->users_id = $users_id;
+        $this->user_id = $users_id;
     }
 
     /**
@@ -147,9 +147,9 @@ class Post extends BaseEntity
     }
 
     /**
-     * @param DateTime $updatedAt
+     * @param DateTime|null $updatedAt
      */
-    public function setUpdatedAt(DateTime $updatedAt): void
+    public function setUpdatedAt(?DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }

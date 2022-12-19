@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use DateTime;
 use Exception;
 
 class BaseEntity
@@ -13,16 +14,18 @@ class BaseEntity
     public function hydrate(array $data): void
     {
         foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            if (method_exists($this, $method)) {
-                if (is_string($value)) {
-                    $this->$method($value);
-                } else {
-                    $this->$method(new \DateTime($value));
+            $setterMethod = 'set' . ucfirst($key);
+            if (method_exists($this, $setterMethod)) {
+                if (in_array($key, ['createdAt', 'updatedAt']) && !($value instanceof DateTime) && $value !== null) {
+                    $value = new DateTime($value);
                 }
+                $this->$setterMethod($value);
             }
         }
     }
+
+
+
 
     /**
      * @return array

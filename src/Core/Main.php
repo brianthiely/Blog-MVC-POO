@@ -5,7 +5,8 @@ namespace App\Core;
 
 use App\Controllers\MainController;
 use App\Globals\GlobalsFactory;
-use App\Models\Session;
+use App\Services\Flash;
+use App\Services\Session;
 use PHPMailer\PHPMailer\Exception;
 
 class Main
@@ -16,8 +17,8 @@ class Main
      */
     public function start()
     {
-        $session = new Session();
-        $session->startSession();
+        Session::start();
+
         $global = GlobalsFactory::getInstance()->createGlobals();
 
         $get = $global->getGet();

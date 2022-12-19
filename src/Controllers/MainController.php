@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Mailer\MailerFactory;
-use Exception;
 use App\Form\ContactForm;
+use App\Mailer\MailerFactory;
+use App\Services\Flash;
+use Exception;
 
 
 class MainController extends Controller
@@ -27,7 +28,7 @@ class MainController extends Controller
             if ($contactForm->isValid()) {
                 $data = $contactForm->getData();
                 $this->sendMail($data);
-                $this->global->setSession('message', 'Your message has been sent');
+                Flash::set('success', 'Your message has been sent');
                 $this->redirect('/');
             }
         }

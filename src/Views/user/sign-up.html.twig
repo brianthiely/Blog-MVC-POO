@@ -1,0 +1,12 @@
+{% extends "default.html.twig" %}
+{% block body %}
+    <main>
+        <h1 class="text-center mt-5">Sign-up</h1>
+        <div class="w-50 m-auto">
+            {{ SignUpForm | raw }}
+        </div>
+        <div class="text-center mt-3 mb-5">
+            <a href="/user/login"> Already registered - Login </a>
+        </div>
+    </main>
+{% endblock %}

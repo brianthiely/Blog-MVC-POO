@@ -5,6 +5,7 @@ namespace App\Form;
 
 use App\Core\Form;
 use App\Globals\GlobalsFactory;
+use App\Services\Session;
 
 class AddPostForm extends Form
 {
@@ -13,7 +14,7 @@ class AddPostForm extends Form
     /**
      * @return string
      */
-    public function getForm(): string
+    public function createForm(): string
     {
         $this->startForm()
             ->addLabelFor('title', 'Article title:')
@@ -47,7 +48,7 @@ class AddPostForm extends Form
             ->addSpan($this->errors['content'] ?? '', ['class' => 'invalid-feedback'])
 
             ->addButton('Submit', [
-                'class' => 'btn btn-primary mt-3 w-100'
+                'class' => 'btn btn-primary mt-3 w-100',
             ])
             ->endForm();
         return $this->create();
@@ -87,6 +88,7 @@ class AddPostForm extends Form
             'author' => strip_tags($global->getPost('author')),
             'chapo' => strip_tags($global->getPost('chapo')),
             'content' => html_entity_decode($contentClean),
+            'user_id' => Session::get('user','id'),
         ];
     }
 

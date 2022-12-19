@@ -25,12 +25,12 @@ class ContactForm extends Form
             ->addSpan($this->errors['name'] ?? '', ['class' => 'invalid-feedback'])
 
             ->addLabelFor('mail', 'E-mail :')
-            ->addInput('text', 'mail', [
-                'id' => 'mail',
-                'value' => $this->getData()['mail'] ?? '',
-                'class' => (isset($this->errors['mail'])) ? 'form-control is-invalid' : 'form-control',
+            ->addInput('text', 'email', [
+                'id' => 'email',
+                'value' => $this->getData()['email'] ?? '',
+                'class' => (isset($this->errors['email'])) ? 'form-control is-invalid' : 'form-control',
             ])
-            ->addSpan($this->errors['mail'] ?? '', ['class' => 'invalid-feedback'])
+            ->addSpan($this->errors['email'] ?? '', ['class' => 'invalid-feedback'])
 
             ->addLabelFor('phone', 'Phone numbers :')
             ->addInput('text', 'phone', [
@@ -56,45 +56,45 @@ class ContactForm extends Form
     }
 
 
-public function isValid(): bool
-{
-    $data = $this->getData();
+    public function isValid(): bool
+    {
+        $data = $this->getData();
 
-    if (empty($data['name'])) {
-        $this->errors['name'] = 'The name is required';
-    }
+        if (empty($data['name'])) {
+            $this->errors['name'] = 'The name is required';
+        }
 
-    if (empty($data['mail'])) {
-        $this->errors['mail'] = 'The mail is required';
-    }
+        if (empty($data['email'])) {
+            $this->errors['email'] = 'The mail is required';
+        }
 
-    if (!$this->isEmailValid()) {
-        $this->errors['mail'] = 'The mail is not valid';
-    }
+        if (!$this->isEmailValid()) {
+            $this->errors['email'] = 'The mail is not valid';
+        }
 
-    if (empty($data['phone'])) {
-        $this->errors['phone'] = 'The phone is required';
-    }
+        if (empty($data['phone'])) {
+            $this->errors['phone'] = 'The phone is required';
+        }
 
-    if (!$this->isPhoneValid()) {
-        $this->errors['phone'] = 'The phone is not valid';
-    }
+        if (!$this->isPhoneValid()) {
+            $this->errors['phone'] = 'The phone is not valid';
+        }
 
-    if (empty($data['message'])) {
-        $this->errors['message'] = 'The message is required';
+        if (empty($data['message'])) {
+            $this->errors['message'] = 'The message is required';
+        }
+        return empty($this->errors);
     }
-    return empty($this->errors);
-}
 
     /**
      * @return bool
      */
     public function isEmailValid(): bool
     {
-        if(empty($this->getData()['mail'])) {
+        if(empty($this->getData()['email'])) {
             return true;
         }
-        if (!filter_var($this->getData()['mail'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->getData()['email'], FILTER_VALIDATE_EMAIL)) {
             return false;
         }
         return true;
@@ -128,7 +128,7 @@ public function isValid(): bool
         $global = GlobalsFactory::getInstance()->createGlobals();
         return [
             'name' => strip_tags($global->getPost('name')),
-            'mail' => strip_tags($global->getPost('mail')),
+            'email' => strip_tags($global->getPost('email')),
             'phone' => strip_tags($global->getPost('phone')),
             'message' => strip_tags($global->getPost('message')),
         ];

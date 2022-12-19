@@ -6,6 +6,8 @@ namespace App\Controllers;
 use App\Form\AddCommentForm;
 use App\Models\Comment;
 use App\Models\CommentRepository;
+use App\Services\Flash;
+use App\Services\Session;
 use Exception;
 
 class CommentController extends Controller
@@ -16,24 +18,28 @@ class CommentController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $postId
      * @return string
      * @throws Exception
      */
-    public function addComment(int $id): string
+    public function addComment(int $postId): string
     {
-        $commentForm = new AddCommentForm();
+        $form = new AddCommentForm();
 
-        if ($commentForm->isSubmitted()) {
-            if ($commentForm->isValid()) {
-                $data = $commentForm->getData();
-                $comment = new Comment($data, $id);
-                $commentRepository = new CommentRepository();
-                $commentRepository->save($comment);
-                $this->global->setSession('message', 'Your comment has been sent');
-                $this->redirect('/post/read/' . $id);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $data['post_id'] = $postId;
+                $comment = new Comment($data);
+                (new CommentRepository())->save($comment);
+                if (Session::get('user', 'roles') === 'admin') {
+                    Flash::set('success', 'Your comment has been added successfully');
+                } elseif (Session::get('user', 'roles') === 'user') {
+                    Flash::set('message', 'Your comment has been added successfully and will be visible after validation by an administrator');
+                }
+                $this->redirect('/post/read/' . $postId);
             }
         }
-        return $commentForm->getForm();
+        return $form->createForm();
     }
 }
