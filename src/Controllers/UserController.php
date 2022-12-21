@@ -38,6 +38,7 @@ class UserController extends Controller
         if ($signInForm->isSubmitted()) {
             if ($signInForm->isValid()) {
                 $data = $signInForm->getData();
+
                 $userRepository = new UserRepository();
                 $userFound = $userRepository->getUserByEmail($data['email']);
                 if (!isset($userFound)) {
@@ -48,6 +49,7 @@ class UserController extends Controller
                     Flash::set('error', 'Email or password is incorrect');
                     $this->redirect('/user/login');
                 }
+                Session::set('user', $userFound->generateCsrfToken());
                 Session::set('user', $userFound);
                 if ($userFound->isAdmin()) {
                     Flash::set('message', 'Welcome back ' . $userFound->getFirstname() . ' you are an admin');
@@ -91,6 +93,7 @@ class UserController extends Controller
                 $userRepository = new UserRepository();
                 $userRepository->save($user);
                 $user = $userRepository->getUserByEmail($data['email']);
+                Session::set('user', $user->generateCsrfToken());
                 Session::set('user', $user);
                 Flash::set('success', 'Your account has been created and you are logged in');
                 $this->redirect('/');

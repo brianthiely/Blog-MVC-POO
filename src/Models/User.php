@@ -15,6 +15,7 @@ class User extends BaseEntity
     protected string $email;
     protected string $password;
     protected string $roles;
+    protected string $csrfToken;
     protected DateTime $createdAt;
     protected ?DateTime $updatedAt;
 
@@ -158,6 +159,37 @@ class User extends BaseEntity
     public function setRoles(string $roles): void
     {
         $this->roles = $roles;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCsrfToken(): string
+    {
+        return $this->csrfToken;
+    }
+
+    /**
+     * Génère un token CSRF aléatoire et le stocke dans la propriété de l'objet.
+     *
+     * @return string Le token CSRF généré
+     * @throws Exception
+     */
+    public function generateCsrfToken(): string
+    {
+        $this->csrfToken = bin2hex(random_bytes(32));
+        return $this->csrfToken;
+    }
+
+    /**
+     * Vérifie si un token CSRF est valide en le comparant au token stocké dans la propriété de l'objet.
+     *
+     * @param string $token Le token CSRF à vérifier
+     * @return bool `true` si le token est valide, `false` sinon
+     */
+    public function checkCsrfToken(string $token): bool
+    {
+        return $token === $this->csrfToken;
     }
 
     /**

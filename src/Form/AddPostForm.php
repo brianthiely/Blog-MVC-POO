@@ -50,6 +50,9 @@ class AddPostForm extends Form
             ->addButton('Submit', [
                 'class' => 'btn btn-primary mt-3 w-100',
             ])
+            ->addInput('hidden', 'csrf_token', [
+                'value' => Session::get('user', 'csrfToken') ?? '',
+            ])
             ->endForm();
         return $this->create();
     }
@@ -89,6 +92,7 @@ class AddPostForm extends Form
             'chapo' => strip_tags($global->getPost('chapo')),
             'content' => html_entity_decode($contentClean),
             'user_id' => Session::get('user','id'),
+            'csrfToken' => $global->getPost('csrf_token'),
         ];
     }
 

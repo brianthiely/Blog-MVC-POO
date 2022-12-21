@@ -27,6 +27,9 @@ class AddCommentForm extends Form
             ->addButton('Submit', [
                 'class' => 'btn btn-primary mt-3 w-100',
             ])
+            ->addInput('hidden', 'csrf_token', [
+                'value' => Session::get('user', 'csrfToken') ?? '',
+            ])
             ->endForm();
 
         return $this->create();
@@ -43,6 +46,7 @@ class AddCommentForm extends Form
             'author' => Session::get('user', 'username'),
             'user_id' => Session::get('user', 'id'),
             'visibility' => (Session::get('user', 'roles') === 'admin') ? 1 : 0,
+            'csrfToken' => $globals->getPost('csrf_token'),
         ];
     }
 
