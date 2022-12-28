@@ -1,0 +1,26 @@
+{% extends 'adminDefault.html.twig' %}
+
+{% block body %}
+    <table class="table table-striped mt-5">
+        <thead class="text-center">
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr class="text-center">
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.author }}</td>
+
+                <td>
+                    <a href="/admin/modify/{{ post.id }}" class="btn btn-warning">Update</a>
+                    <a href="/admin/deletePost/{{ post.id }}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

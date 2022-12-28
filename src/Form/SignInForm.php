@@ -5,6 +5,7 @@ namespace App\Form;
 
 use App\Core\Form;
 use App\Globals\GlobalsFactory;
+use App\Services\Session;
 
 class SignInForm extends Form
 {

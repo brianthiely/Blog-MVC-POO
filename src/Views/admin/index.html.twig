@@ -1,1 +1,8 @@
-{% extends "default.html.twig" %}
+{% extends "adminDefault.html.twig" %}
+
+{% block body %}
+    <div class="d-flex justify-content-evenly mt-5">
+        <p class="fw-bold "><a class="link-danger" href="/admin/posts">Manage blog posts</a></p>
+        <p class="fw-bold "><a class="link-danger" href="/admin/comments">Manage comments</a></p>
+    </div>
+{% endblock %}

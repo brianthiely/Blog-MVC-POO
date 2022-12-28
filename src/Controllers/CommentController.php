@@ -31,6 +31,10 @@ class CommentController extends Controller
                 $data = $form->getData();
                 $data['post_id'] = $postId;
                 $comment = new Comment($data);
+                if (!isset($data['csrfToken']) || $data['csrfToken'] !== Session::get('user', 'csrfToken')) {
+                    Flash::set('error', 'Something went wrong please try again');
+                    $this->redirect('/post/read/' . $postId);
+                }
                 (new CommentRepository())->save($comment);
                 if (Session::get('user', 'roles') === 'admin') {
                     Flash::set('success', 'Your comment has been added successfully');

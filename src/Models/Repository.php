@@ -110,4 +110,54 @@ class Repository extends BaseEntity
         $table = $this->getTable();
         return $this->request("SELECT * FROM $table WHERE $field = ?", [$value])->fetch();
     }
+
+    /**
+     * @param object $object
+     * @param int $id
+     * @return PDOStatement
+     */
+    public function update(object $object, int $id): PDOStatement
+    {
+        $table = $this->getTable();
+
+        // We get the properties of the object
+        $properties = $object->getProperties();
+
+        // We create an array with the fields to update
+        $updateFields = array_map(function ($field): string {
+            return "$field = :$field";
+        }, array_keys($properties));
+
+        // We transform the updateFields array into a string
+        $updateFieldsString = implode(', ', $updateFields);
+
+        // We add the id field to the properties array
+        $properties['id'] = $id;
+
+        // We prepare the query
+        return $this->request("UPDATE $table SET $updateFieldsString WHERE id = :id", $properties);
+
+    }
+
+    /**
+     * @param string $field
+     * @param string|int $value
+     * @param string $params
+     * @return PDOStatement
+     */
+    public function updateOneBy(string $field, string|int $value, string $params): PDOStatement
+    {
+        $table = $this->getTable();
+        return $this->request("UPDATE $table SET $field = ? WHERE id = ?", [$value, $params]);
+    }
+
+    /**
+     * @param int $id
+     * @return PDOStatement
+     */
+    public function delete(int $id): PDOStatement
+    {
+        $table = $this->getTable();
+        return $this->request("DELETE FROM $table WHERE id = ?", [$id]);
+    }
 }
