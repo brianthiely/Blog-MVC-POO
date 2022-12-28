@@ -20,10 +20,10 @@ class Session {
      * Set a session variable
      *
      * @param string $key The key of the session variable
-     * @param $value
+     * @param mixed $value
      * @return void
      */
-    public static function set(string $key, $value): void
+    public static function set(string $key, mixed $value): void
     {
         $_SESSION[$key] = $value;
     }

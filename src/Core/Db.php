@@ -5,7 +5,6 @@ namespace App\Core;
 
 use App\Globals\GlobalsFactory;
 use PDO;
-use PDOException;
 
 class Db extends PDO
 {
@@ -18,19 +17,16 @@ class Db extends PDO
         // Get the database configuration from the .env file.
         $dbConfig = (new GlobalsFactory())::getInstance()->createGlobals();
 
-        try {
-            parent::__construct(
-                'mysql:host=' . $dbConfig->getEnv('DB_HOST') . ';dbname=' . $dbConfig->getEnv('DB_NAME'),
-                $dbConfig->getEnv('DB_USER'),
-                $dbConfig->getEnv('DB_PASSWORD'),
-                [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                ]
-            );
-        } catch (PDOException $e) {
-            echo 'Connection failed: ' . $e->getMessage();
-        }
+        parent::__construct(
+            'mysql:host=' . $dbConfig->getEnv('DB_HOST') . ';dbname=' . $dbConfig->getEnv('DB_NAME'),
+            $dbConfig->getEnv('DB_USER'),
+            $dbConfig->getEnv('DB_PASS'),
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]
+        );
+
     }
 
     /**
