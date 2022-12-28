@@ -21,6 +21,9 @@ class User extends BaseEntity
 
 
     /**
+     * Constructor hydrates the object
+     *
+     * @param array $data The data to hydrate the object with
      * @throws Exception
      */
     public function __construct(array $data)
@@ -28,23 +31,40 @@ class User extends BaseEntity
         $this->hydrate($data);
     }
 
+    /**
+     * Verify if the role is admin
+     *
+     * @return bool True if the role is admin, false otherwise
+     */
     public function isAdmin(): bool
     {
         return $this->getRoles() === 'admin';
     }
 
+    /**
+     * Set the user's role to admin
+     *
+     * @return void
+     */
     public function setAdmin(): void
     {
         $this->setRoles('admin');
     }
 
+    /**
+     * Verify if the role is user
+     *
+     * @return bool True if the role is user, false otherwise
+     */
     public function isUser(): bool
     {
         return $this->getRoles() === 'user';
     }
 
     /**
-     * @return int
+     * Return the user's id
+     *
+     * @return int The user's id
      */
     public function getId(): int
     {
@@ -52,7 +72,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @param int $id
+     * Set the user's id
+     *
+     * @param int $id The user's id
      */
     public function setId(int $id): void
     {
@@ -60,7 +82,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @return string
+     * Return the user's firstname
+     *
+     * @return string The user's firstname
      */
     public function getFirstname(): string
     {
@@ -68,7 +92,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @param string $firstname
+     * Set the user's firstname
+     *
+     * @param string $firstname The user's firstname
      */
     public function setFirstname(string $firstname): void
     {
@@ -76,7 +102,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @return string
+     * Return the user's lastname
+     *
+     * @return string The user's lastname
      */
     public function getLastname(): string
     {
@@ -84,7 +112,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @param string $lastname
+     * Set the user's lastname
+     *
+     * @param string $lastname The user's lastname
      */
     public function setLastname(string $lastname): void
     {
@@ -92,7 +122,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @return string
+     * Return the user's username
+     *
+     * @return string The user's username
      */
     public function getUsername(): string
     {
@@ -100,7 +132,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @param string $username
+     * Set the user's username
+     *
+     * @param string $username The user's username
      */
     public function setUsername(string $username): void
     {
@@ -108,7 +142,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @return string
+     * Return the user's email
+     *
+     * @return string The user's email
      */
     public function getEmail(): string
     {
@@ -116,7 +152,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @param string $email
+     * Set the user's email
+     *
+     * @param string $email The user's email
      */
     public function setEmail(string $email): void
     {
@@ -124,8 +162,10 @@ class User extends BaseEntity
     }
 
     /**
-     * @param string $password
-     * @return bool
+     * Check if the password is correct
+     *
+     * @param string $password The password to check
+     * @return bool True if the password is correct, false otherwise
      */
     public function checkPassword(string $password): bool
     {
@@ -133,20 +173,30 @@ class User extends BaseEntity
     }
 
     /**
-     * @param string $password
+     * Set the user's password
+     *
+     * @param string $password The user's password
      */
     public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
+    /**
+     * Set the user's password with a hashed password
+     *
+     * @param string $password The user's password
+     * @return void The user's password
+     */
     public function setPasswordWithoutHash(string $password): void
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
     }
 
     /**
-     * @return string
+     * Return the user's roles
+     *
+     * @return string The user's roles
      */
     public function getRoles(): string
     {
@@ -154,7 +204,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @param string $roles
+     * Set the user's roles
+     *
+     * @param string $roles The user's roles
      */
     public function setRoles(string $roles): void
     {
@@ -162,7 +214,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @return string
+     * Return the user's csrf token
+     *
+     * @return string The user's csrf token
      */
     public function getCsrfToken(): string
     {
@@ -170,9 +224,9 @@ class User extends BaseEntity
     }
 
     /**
-     * Génère un token CSRF aléatoire et le stocke dans la propriété de l'objet.
+     * Generate a random token
      *
-     * @return string Le token CSRF généré
+     * @return string The token generated
      * @throws Exception
      */
     public function generateCsrfToken(): string
@@ -182,10 +236,10 @@ class User extends BaseEntity
     }
 
     /**
-     * Vérifie si un token CSRF est valide en le comparant au token stocké dans la propriété de l'objet.
+     * Verify if the token is valid and compare it to the token stored in the object.
      *
-     * @param string $token Le token CSRF à vérifier
-     * @return bool `true` si le token est valide, `false` sinon
+     * @param string $token The token to verify
+     * @return bool `true` if the token is valid, `false` otherwise
      */
     public function checkCsrfToken(string $token): bool
     {
@@ -193,7 +247,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @return DateTime
+     * Return the user's creation date
+     *
+     * @return DateTime The user's creation date
      */
     public function getCreatedAt(): DateTime
     {
@@ -201,7 +257,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @param DateTime $createdAt
+     * Set the user's creation date
+     *
+     * @param DateTime $createdAt The user's creation date
      */
     public function setCreatedAt(DateTime $createdAt): void
     {
@@ -209,7 +267,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @return DateTime
+     * Return the user's update date
+     *
+     * @return DateTime The user's update date
      */
     public function getUpdatedAt(): DateTime
     {
@@ -217,7 +277,9 @@ class User extends BaseEntity
     }
 
     /**
-     * @param DateTime|null $updatedAt
+     * Set the user's update date
+     *
+     * @param DateTime|null $updatedAt The user's update date
      */
     public function setUpdatedAt(?DateTime $updatedAt): void
     {

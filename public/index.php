@@ -1,5 +1,4 @@
 <?php
-
 use App\Core\Main;
 
 define('ROOT', dirname(__DIR__));
@@ -12,6 +11,6 @@ $app = new Main();
 
 try {
     $app->start();
-} catch (\PHPMailer\PHPMailer\Exception $e) {
-    return $e->getMessage();
+} catch (Exception $e) {
+    echo $e->getMessage();
 }

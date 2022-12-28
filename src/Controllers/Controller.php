@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Globals\Globals;
@@ -27,7 +26,9 @@ abstract class Controller
    }
 
     /**
-     * @param string $page
+     * Redirect to a specific route
+     *
+     * @param string $page The route to redirect to
      * @return void
      */
    #[NoReturn] protected function redirect(string $page): void

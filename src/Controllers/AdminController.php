@@ -1,7 +1,5 @@
 <?php
 declare(strict_types=1);
-
-
 namespace App\Controllers;
 
 use App\Form\AddPostForm;
@@ -10,7 +8,6 @@ use App\Models\Post;
 use App\Models\PostRepository;
 use App\Services\Flash;
 use App\Services\Session;
-use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -19,6 +16,9 @@ use Twig\Error\SyntaxError;
 class AdminController extends Controller
 {
     /**
+     * Display the admin dashboard
+     *
+     * @return void Render the view
      * @throws SyntaxError
      * @throws RuntimeError
      * @throws LoaderError
@@ -33,6 +33,9 @@ class AdminController extends Controller
     }
 
     /**
+     * Display the admin posts list
+     *
+     * @return void Render the view
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws LoaderError
@@ -48,10 +51,13 @@ class AdminController extends Controller
     }
 
     /**
-     * @throws SyntaxError
-     * @throws RuntimeError
+     * Display modify post form
+     *
+     * @param int $postId The post id to modify
+     * @return void Render the view
      * @throws LoaderError
-     * @throws Exception
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function modify(int $postId): void
     {
@@ -84,8 +90,10 @@ class AdminController extends Controller
     }
 
     /**
-     * @param int $postId
-     * @return void
+     * Delete a post
+     *
+     * @param int $postId The post id to delete
+     * @return void Redirect to the admin posts list
      */
     #[NoReturn] public function deletePost(int $postId): void
     {
@@ -100,6 +108,9 @@ class AdminController extends Controller
 
 
     /**
+     * Display all comments for validation
+     *
+     * @return void Render the view
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws LoaderError
@@ -114,7 +125,13 @@ class AdminController extends Controller
         $this->twig->display('admin/comments.html.twig', compact('comments'));
     }
 
-    #[NoReturn] public function validateComment($commentId): void
+    /**
+     * Validate a comment
+     *
+     * @param int $commentId The comment id to validate
+     * @return void Redirect to the admin comments list
+     */
+    #[NoReturn] public function validateComment(int $commentId): void
     {
         if (Session::get('user', 'roles') !== 'admin') {
             Flash::set('error', 'Access denied');
@@ -126,8 +143,10 @@ class AdminController extends Controller
     }
 
     /**
+     * Delete a comment
+     *
      * @param int $commentId
-     * @return void
+     * @return void Redirect to the admin comments list
      */
     #[NoReturn] public function deleteComment(int $commentId): void
     {

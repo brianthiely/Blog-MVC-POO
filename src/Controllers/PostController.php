@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Form\AddPostForm;
@@ -22,9 +21,12 @@ class PostController extends Controller
     }
 
     /**
+     * Display all posts in the database
+     *
+     * @return void Render the view
      * @throws Exception
      */
-    public function index()
+    public function index(): void
     {
         $posts = (new PostRepository())->getPosts();
         $user = Session::get('user');
@@ -32,9 +34,16 @@ class PostController extends Controller
     }
 
     /**
+     * Display a post
+     *
+     * @param int $postId
+     * @return void Render the view
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      * @throws Exception
      */
-    public function read(int $postId)
+    public function read(int $postId): void
     {
         $user = Session::get('user');
         if (!$user) {
@@ -51,6 +60,9 @@ class PostController extends Controller
     }
 
     /**
+     * Display the form to add a post
+     *
+     * @return void Render the view
      * @throws Exception
      */
     public function add(): void

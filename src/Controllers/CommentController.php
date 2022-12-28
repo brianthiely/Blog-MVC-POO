@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Form\AddCommentForm;
@@ -18,8 +17,10 @@ class CommentController extends Controller
     }
 
     /**
-     * @param int $postId
-     * @return string
+     * Display form to add a comment
+     *
+     * @param int $postId Post ID
+     * @return string HTML
      * @throws Exception
      */
     public function addComment(int $postId): string

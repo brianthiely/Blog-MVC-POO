@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Form\ContactForm;
@@ -17,6 +16,8 @@ class MainController extends Controller
     }
 
     /**
+     * Display form to contact
+     *
      * @return void
      * @throws Exception
      */
@@ -39,9 +40,12 @@ class MainController extends Controller
     }
 
     /**
+     * Send mail to admin
+     *
+     * @param array $data Data from form
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function sendMail($data): void
+    private function sendMail(array $data): void
     {
         $mailer = MailerFactory::getInstance()->createMailer();
         $mailer->send($data);

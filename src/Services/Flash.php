@@ -7,10 +7,10 @@ namespace App\Services;
 class Flash
 {
     /**
-     * Enregistre un message flash
+     * Set a flash message
      *
-     * @param string $key
-     * @param string $value
+     * @param string $key The key of the message
+     * @param string $value The value of the message
      */
     public static function set(string $key, string $value): void
     {
@@ -18,10 +18,10 @@ class Flash
     }
 
     /**
-     * Vérifie si un message flash existe
+     * Verify if a flash message exists
      *
-     * @param string $key
-     * @return bool
+     * @param string $key The key of the message
+     * @return bool True if the message exists, false otherwise
      */
     public static function has(string $key): bool
     {
@@ -29,10 +29,10 @@ class Flash
     }
 
     /**
-     * Récupère un message flash
+     * Return a flash message
      *
-     * @param string $key
-     * @return string|null
+     * @param string $key The key of the message
+     * @return string|null The message or null if it doesn't exist
      */
     public static function get(string $key): ?string
     {

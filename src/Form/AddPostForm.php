@@ -13,7 +13,9 @@ class AddPostForm extends Form
     private array $data = [];
 
     /**
-     * @return string
+     * Create a new form instance.
+     *
+     * @return string The form HTML
      */
     public function createForm(): string
     {
@@ -59,7 +61,9 @@ class AddPostForm extends Form
     }
 
     /**
-     * @return bool
+     * Check if the form is valid.
+     *
+     * @return bool True if the form is valid, false otherwise
      */
     public function isValid(): bool
     {
@@ -79,7 +83,9 @@ class AddPostForm extends Form
     }
 
     /**
-     * @return array
+     * Get the form data.
+     *
+     * @return array The form data
      */
     public function getData(): array
     {
@@ -97,7 +103,9 @@ class AddPostForm extends Form
     }
 
     /**
-     * @param array $post
+     * Set the form data.
+     *
+     * @param array $post The form data
      * @return void
      */
     public function setData(array $post): void

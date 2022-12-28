@@ -11,8 +11,10 @@ class SignInForm extends Form
 {
     private array $errors = [];
 
-/**
-     * @return string
+    /**
+     * Create a new form instance.
+     *
+     * @return string The form HTML
      */
     public function createForm(): string
     {
@@ -42,7 +44,9 @@ class SignInForm extends Form
     }
 
     /**
-     * @return bool
+     * Check if the form is valid.
+     *
+     * @return bool True if the form is valid, false otherwise
      */
     public function isValid(): bool
     {
@@ -60,7 +64,9 @@ class SignInForm extends Form
     }
 
     /**
-     * @return array
+     * Get data from the form.
+     *
+     * @return array The data
      */
     public function getData(): array
     {
@@ -71,6 +77,11 @@ class SignInForm extends Form
         ];
     }
 
+    /**
+     * Check if the email is valid.
+     *
+     * @return bool True if the email is valid, false otherwise
+     */
     private function isEmailValid(): bool
     {
         if(empty($this->getData()['email'])) {

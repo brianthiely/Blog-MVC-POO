@@ -11,8 +11,10 @@ use PHPMailer\PHPMailer\Exception;
 class Main
 {
     /**
-     * @return string|void
-     * @throws \Exception
+     * Start the application and run the controller and action specified in the URL
+     *
+     * @return string|void The response from the controller
+     * @throws \Exception If the controller or action is not found
      */
     public function start()
     {
@@ -22,38 +24,43 @@ class Main
         $get = $global->getGet();
         $uri = $global->getUri();
 
+        // If the URI is not empty and ends with a slash, redirect to the same URI without the slash.
         if (!empty($uri) && $uri != '/' && $uri[-1] == '/') {
             $uri = substr($uri, 0, -1);
             http_response_code(301);
             header('Location: ' . $uri);
         }
 
-        // We manage the url parameters
-        // p=controller/method/params
+        // If the "p" parameter is set in the URL, run the specified controller and action.
         if(!empty($get['p'])) {
+            // Split the "p" parameter value into an array of parameters.
             $params = explode('/', $get['p']);
 
+            // If the first parameter is not empty, run the specified controller and action.
             if($params[0] !== "") {
-                // We retrieve the controller to instantiate
+                // Create the name of the controller class based on the first parameter.
                 $controller = "\\App\\Controllers\\" . ucfirst(array_shift($params)) . "Controller";
 
-                // We instantiate the controller
                 $controller = new $controller();
 
-                // We retrieve the second parameter of the url
+                // Set the action to the second parameter, or "index" if no second parameter is specified.
                 $action = (isset($params[0])) ? array_shift($params) : 'index';
 
+                // If the action method exists in the controller class, run it.
                 if(method_exists($controller, $action)) {
+                    // If there are additional parameters, call the action method with them as arguments.
+                    // Otherwise, just call the action method without any arguments.
                     (isset($params[0])) ? call_user_func_array(
                         [$controller, $action],
                         $params
                     ) : $controller->$action();
                 }
+                // If the action method doesn't exist, return a "404" error.
                 http_response_code(404);
                 return "This page doesn't exist";
             }
         }
-        // No parameter we return the default controller
+        // If no controller and action are specified in the URL, run the "index" action of the "MainController".
         $controller = new MainController;
         try {
             $controller->index();

@@ -10,9 +10,11 @@ use PDOStatement;
 class Repository extends BaseEntity
 {
     /**
-     * @param string $query
-     * @param array $params
-     * @return PDOStatement
+     * Execute a database query and return the resulting statement.
+     *
+     * @param string $query The query to execute.
+     * @param array $params An array of parameters to bind to the query.
+     * @return PDOStatement The resulting statement.
      */
     public function request(string $query, array $params = []): PDOStatement
     {
@@ -23,7 +25,11 @@ class Repository extends BaseEntity
     }
 
     /**
-     * @return array|string
+     * Get the name of the database table corresponding to the repository model.
+     *
+     * The name of the table is derived from the name of the model class, with the "Repository" suffix removed.
+     *
+     * @return array|string The name of the table.
      */
     private function getTable(): array|string
     {
@@ -33,8 +39,10 @@ class Repository extends BaseEntity
     }
 
     /**
-     * @param object $object
-     * @return PDOStatement
+     * Save an object to the database.
+     *
+     * @param object $object The object to save.
+     * @return PDOStatement Statement The resulting statement.
      */
     public function save(object $object): PDOStatement
     {
@@ -59,7 +67,9 @@ class Repository extends BaseEntity
     }
 
     /**
-     * @return array
+     * Retrieve all rows from the database table.
+     *
+     * @return array An array of rows from the table.
      */
     public function fetchAll(): array
     {
@@ -69,8 +79,10 @@ class Repository extends BaseEntity
     }
 
     /**
-     * @param int $id
-     * @return mixed
+     * Retrieve a row from the database table by its primary key.
+     *
+     * @param int $id The primary key of the row to retrieve.
+     * @return mixed The row from the table.
      */
     public function fetch(int $id): mixed
     {
@@ -79,31 +91,30 @@ class Repository extends BaseEntity
     }
 
     /**
-     * @param array $params
-     * @return bool|array
+     * Retrieve rows from the database table by matching a field and its value.
+     *
+     * @param array $params An array of field-value pairs to match.
+     * @return bool|array The resulting rows, or false if no rows were found.
      */
     public function fetchBy(array $params): bool|array
     {
         $table = $this->getTable();
 
-        // On récupère les clés du tableau
         $fields = array_map(function ($field) {
             return "$field = :$field";
         }, array_keys($params));
 
-        // On transforme le tableau "champs" en une chaine de caractères
         $fields_list = implode(' AND ', $fields);
-
-        // On prépare la requête en ordre decroissant
         $query = $this->request("SELECT *, DATE_FORMAT(createdAt, '%d/%m/%Y at %Hh%i') AS created_fr, DATE_FORMAT(updatedAt, '%d/%m/%Y at %Hh%i') AS updated_fr FROM $table WHERE $fields_list ORDER BY createdAt DESC", $params);
-
         return $query->fetchAll();
     }
 
     /**
-     * @param string $field
-     * @param string $value
-     * @return mixed
+     * Retrieve a row from the database table by matching a single field and its value.
+     *
+     * @param string $field The field to match.
+     * @param string $value The value to match.
+     * @return mixed The resulting row.
      */
     public function fetchOneBy(string $field, string $value): mixed
     {
@@ -112,9 +123,11 @@ class Repository extends BaseEntity
     }
 
     /**
-     * @param object $object
-     * @param int $id
-     * @return PDOStatement
+     * Update a row in the database table by its primary key.
+     *
+     * @param object $object The object containing the new field values.
+     * @param int $id The primary key of the row to update.
+     * @return PDOStatement Statement The statement object resulting from the query.
      */
     public function update(object $object, int $id): PDOStatement
     {
@@ -140,10 +153,12 @@ class Repository extends BaseEntity
     }
 
     /**
-     * @param string $field
-     * @param string|int $value
-     * @param string $params
-     * @return PDOStatement
+     * Update a single field of a row in the database table by its primary key.
+     *
+     * @param string $field The name of the field to update.
+     * @param string|int $value The new value for the field.
+     * @param string $params The primary key of the row to update.
+     * @return PDOStatement Statement The statement object resulting from the query.
      */
     public function updateOneBy(string $field, string|int $value, string $params): PDOStatement
     {
@@ -152,8 +167,10 @@ class Repository extends BaseEntity
     }
 
     /**
-     * @param int $id
-     * @return PDOStatement
+     * Delete a row from the database table by its primary key.
+     *
+     * @param int $id The primary key of the row to delete.
+     * @return PDOStatement Statement The statement object resulting from the query.
      */
     public function delete(int $id): PDOStatement
     {

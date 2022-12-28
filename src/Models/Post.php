@@ -19,6 +19,8 @@ class Post extends BaseEntity
 
 
     /**
+     * Hydrate the object with the data
+     * @param array $data
      * @throws Exception
      */
     public function __construct(array $data)
@@ -27,6 +29,8 @@ class Post extends BaseEntity
     }
 
     /**
+     * Get the value of id
+     *
      * @return int
      */
     public function getId(): int
@@ -35,7 +39,10 @@ class Post extends BaseEntity
     }
 
     /**
+     * Set the value of id
+     *
      * @param int $id
+     * @return  void
      */
     public function setId(int $id): void
     {
@@ -43,6 +50,8 @@ class Post extends BaseEntity
     }
 
     /**
+     * Get the value of user_id
+     *
      * @return int
      */
     public function getUser_id(): int
@@ -51,7 +60,10 @@ class Post extends BaseEntity
     }
 
     /**
+     * Set the value of user_id
+     *
      * @param int $users_id
+     * @return void
      */
     public function setUser_id(int $users_id): void
     {
@@ -59,6 +71,8 @@ class Post extends BaseEntity
     }
 
     /**
+     * Get the value of title
+     *
      * @return string
      */
     public function getTitle(): string
@@ -67,7 +81,10 @@ class Post extends BaseEntity
     }
 
     /**
+     * Set the value of title
+     *
      * @param string $title
+     * @return void
      */
     public function setTitle(string $title): void
     {
@@ -75,6 +92,8 @@ class Post extends BaseEntity
     }
 
     /**
+     * Get the value of author
+     *
      * @return string
      */
     public function getAuthor(): string
@@ -83,7 +102,10 @@ class Post extends BaseEntity
     }
 
     /**
+     * Set the value of author
+     *
      * @param string $author
+     * @return void
      */
     public function setAuthor(string $author): void
     {
@@ -91,6 +113,8 @@ class Post extends BaseEntity
     }
 
     /**
+     * Get the value of chapo
+     *
      * @return string
      */
     public function getChapo(): string
@@ -99,7 +123,10 @@ class Post extends BaseEntity
     }
 
     /**
+     * Set the value of chapo
+     *
      * @param string $chapo
+     * @return void
      */
     public function setChapo(string $chapo): void
     {
@@ -107,6 +134,8 @@ class Post extends BaseEntity
     }
 
     /**
+     * Get the value of content
+     *
      * @return string
      */
     public function getContent(): string
@@ -115,7 +144,10 @@ class Post extends BaseEntity
     }
 
     /**
+     * Set the value of content
+     *
      * @param string $content
+     * @return void
      */
     public function setContent(string $content): void
     {
@@ -123,6 +155,8 @@ class Post extends BaseEntity
     }
 
     /**
+     * Get the value of createdAt
+     *
      * @return DateTime
      */
     public function getCreatedAt(): DateTime
@@ -131,7 +165,10 @@ class Post extends BaseEntity
     }
 
     /**
+     * Set the value of createdAt
+     *
      * @param DateTime $createdAt
+     * @return void
      */
     public function setCreatedAt(DateTime $createdAt): void
     {
@@ -139,6 +176,8 @@ class Post extends BaseEntity
     }
 
     /**
+     * Get the value of updatedAt
+     *
      * @return DateTime
      */
     public function getUpdatedAt(): DateTime
@@ -147,7 +186,10 @@ class Post extends BaseEntity
     }
 
     /**
+     * Set the value of updatedAt
+     *
      * @param DateTime|null $updatedAt
+     * @return void
      */
     public function setUpdatedAt(?DateTime $updatedAt): void
     {
