@@ -57,4 +57,7 @@ class AddCommentForm extends Form
         }
         return empty($this->errors);
     }
+
+
+
 }

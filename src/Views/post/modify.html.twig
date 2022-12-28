@@ -1,0 +1,15 @@
+{% extends "adminDefault.html.twig" %}
+
+
+{% block body %}
+    <main>
+        <h1 class="text-center m-5">Edit article</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {{ addPostForm | raw }}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

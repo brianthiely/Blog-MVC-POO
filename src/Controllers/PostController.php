@@ -10,6 +10,9 @@ use App\Models\PostRepository;
 use App\Services\Flash;
 use App\Services\Session;
 use Exception;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class PostController extends Controller
 {
@@ -39,14 +42,13 @@ class PostController extends Controller
             $this->redirect('/post');
         }
         $post = (new PostRepository())->getPost($postId);
-        $comments =(new CommentRepository())->getComments($postId);
+        $comments =(new CommentRepository())->getCommentsByPost($postId);
         $commentController = new CommentController();
         $commentForm = $commentController->addComment($postId);
 
         $this->twig->display('post/read.html.twig', compact('post','comments')
             + ['addCommentForm' => $commentForm]);
     }
-
 
     /**
      * @throws Exception
@@ -65,7 +67,7 @@ class PostController extends Controller
                 $post = new Post($data);
                 if (!isset($data['csrfToken']) || $data['csrfToken'] !== Session::get('user', 'csrfToken')) {
                     Flash::set('error', 'Something went wrong please try again');
-                    $this->redirect('/post/');
+                    $this->redirect('/post');
                 }
                 $postRepository = new PostRepository;
                 $postRepository->save($post);
@@ -77,4 +79,5 @@ class PostController extends Controller
             'addPostForm' => $addPostForm->createForm()
         ]);
     }
+
 }

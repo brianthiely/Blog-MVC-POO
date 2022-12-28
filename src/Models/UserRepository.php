@@ -21,4 +21,12 @@ class UserRepository extends Repository
         }
         return new User((array)$data);
     }
+
+    /**
+     * @return array
+     */
+    public function getUsers(): array
+    {
+        return $this->fetchAll();
+    }
 }
