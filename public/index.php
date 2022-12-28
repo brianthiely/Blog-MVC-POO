@@ -7,7 +7,7 @@ require ROOT . "/vendor/autoload.php";
 $dotenv = Dotenv\Dotenv::createImmutable(ROOT);
 $dotenv->load();
 
-$app = new Main();
+$app = new Main(ROOT);
 
 try {
     $app->start();

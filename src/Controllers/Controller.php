@@ -12,13 +12,13 @@ use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
 {
-   private FilesystemLoader $loader;
+   protected FilesystemLoader $loader;
    protected Environment $twig;
    protected Globals $global;
 
-    public function __construct()
+    public function __construct($loader)
    {
-        $this->loader = New FilesystemLoader(ROOT . '/src/Views');
+        $this->loader = $loader;
         $this->twig = new Environment($this->loader);
         $this->twig->addGlobal('session', new Session());
         $this->twig->addGlobal('flash', new Flash());

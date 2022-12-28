@@ -10,11 +10,6 @@ use Exception;
 
 class MainController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Display form to contact
      *

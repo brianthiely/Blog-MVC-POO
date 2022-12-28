@@ -11,11 +11,6 @@ use Exception;
 
 class CommentController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Display form to add a comment
      *

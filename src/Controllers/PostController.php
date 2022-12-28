@@ -15,11 +15,6 @@ use Twig\Error\SyntaxError;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Display all posts in the database
      *
@@ -52,7 +47,7 @@ class PostController extends Controller
         }
         $post = (new PostRepository())->getPost($postId);
         $comments =(new CommentRepository())->getCommentsByPost($postId);
-        $commentController = new CommentController();
+        $commentController = new CommentController($this->loader);
         $commentForm = $commentController->addComment($postId);
 
         $this->twig->display('post/read.html.twig', compact('post','comments')

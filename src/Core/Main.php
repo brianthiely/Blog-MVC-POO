@@ -7,9 +7,16 @@ use App\Controllers\MainController;
 use App\Globals\GlobalsFactory;
 use App\Services\Session;
 use PHPMailer\PHPMailer\Exception;
+use Twig\Loader\FilesystemLoader;
 
 class Main
 {
+
+    public function __construct(private string $root)
+    {
+        $this->root = $root;
+    }
+
     /**
      * Start the application and run the controller and action specified in the URL
      *
@@ -41,7 +48,7 @@ class Main
                 // Create the name of the controller class based on the first parameter.
                 $controller = "\\App\\Controllers\\" . ucfirst(array_shift($params)) . "Controller";
 
-                $controller = new $controller();
+                $controller = new $controller(New FilesystemLoader($this->root . '/src/Views'));
 
                 // Set the action to the second parameter, or "index" if no second parameter is specified.
                 $action = (isset($params[0])) ? array_shift($params) : 'index';
@@ -61,7 +68,7 @@ class Main
             }
         }
         // If no controller and action are specified in the URL, run the "index" action of the "MainController".
-        $controller = new MainController;
+        $controller = new MainController(New FilesystemLoader($this->root . '/src/Views'));
         try {
             $controller->index();
         } catch (\Exception $e) {

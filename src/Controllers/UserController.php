@@ -16,7 +16,6 @@ use Twig\Error\SyntaxError;
 
 class UserController extends Controller
 {
-
     /**
      * Login user
      *

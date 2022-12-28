@@ -39,7 +39,7 @@ class Db extends PDO
      *
      * @return static
      */
-    public static function getInstance(): self
+    public static function getInstance(): Db
     {
         if (self::$instance === null) {
             self::$instance = new self();
