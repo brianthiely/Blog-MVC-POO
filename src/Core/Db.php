@@ -40,6 +40,6 @@ class Db extends PDO
         if (self::$instance === null) {
             self::$instance = new self();
         }
-        return self::$instance;
+        return Db::$instance;
     }
 }
