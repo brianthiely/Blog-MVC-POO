@@ -9,7 +9,7 @@ use Exception;
 class Post extends BaseEntity
 {
     protected int $id;
-    protected int $user_id;
+    protected int $userId;
     protected string $title;
     protected string $author;
     protected string $chapo;
@@ -56,7 +56,7 @@ class Post extends BaseEntity
      */
     public function getUser_id(): int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
     /**
@@ -67,7 +67,7 @@ class Post extends BaseEntity
      */
     public function setUser_id(int $users_id): void
     {
-        $this->user_id = $users_id;
+        $this->userId = $users_id;
     }
 
     /**

@@ -9,8 +9,8 @@ use Exception;
 class Comment extends BaseEntity
 {
     protected int $id;
-    protected int $post_id;
-    protected int $user_id;
+    protected int $postId;
+    protected int $userId;
     protected string $author;
     protected string $content;
     protected int $visibility;
@@ -57,18 +57,18 @@ class Comment extends BaseEntity
      */
     public function getPost_id(): int
     {
-        return $this->post_id;
+        return $this->postId;
     }
 
     /**
      * Set the value of post_id
      *
-     * @param int $post_id The value of post_id
+     * @param int $postId The value of post_id
      * @return void
      */
-    public function setPost_id(int $post_id): void
+    public function setPost_id(int $postId): void
     {
-        $this->post_id = $post_id;
+        $this->postId = $postId;
     }
 
     /**
@@ -78,18 +78,18 @@ class Comment extends BaseEntity
      */
     public function getUser_id(): int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
     /**
      * Set the value of user_id
      *
-     * @param int $user_id The value of user_id
+     * @param int $userId The value of user_id
      * @return void
      */
-    public function setUser_id(int $user_id): void
+    public function setUser_id(int $userId): void
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
     }
 
     /**
