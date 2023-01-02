@@ -13,7 +13,7 @@ class CommentRepository extends Repository
      */
     public function getCommentsByPost(int $postId): bool|array
     {
-        return $this->fetchBy(['post_id' => $postId, 'visibility' => 1]);
+        return $this->fetchBy(['postId' => $postId, 'visibility' => 1]);
     }
 
     /**

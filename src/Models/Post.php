@@ -50,24 +50,24 @@ class Post extends BaseEntity
     }
 
     /**
-     * Get the value of user_id
+     * Get the value of userId
      *
      * @return int
      */
-    public function getUser_id(): int
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
     /**
-     * Set the value of user_id
+     * Set the value of userId
      *
-     * @param int $users_id
+     * @param int $usersId
      * @return void
      */
-    public function setUser_id(int $users_id): void
+    public function setUserId(int $usersId): void
     {
-        $this->userId = $users_id;
+        $this->userId = $usersId;
     }
 
     /**

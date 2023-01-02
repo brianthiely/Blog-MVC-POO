@@ -51,43 +51,43 @@ class Comment extends BaseEntity
     }
 
     /**
-     * Get the value of post_id
+     * Get the value of postId
      *
-     * @return int The value of post_id
+     * @return int The value of postId
      */
-    public function getPost_id(): int
+    public function getPostId(): int
     {
         return $this->postId;
     }
 
     /**
-     * Set the value of post_id
+     * Set the value of postId
      *
-     * @param int $postId The value of post_id
+     * @param int $postId The value of postId
      * @return void
      */
-    public function setPost_id(int $postId): void
+    public function setPostId(int $postId): void
     {
         $this->postId = $postId;
     }
 
     /**
-     * Get the value of user_id
+     * Get the value of userId
      *
-     * @return int The value of user_id
+     * @return int The value of userId
      */
-    public function getUser_id(): int
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
     /**
-     * Set the value of user_id
+     * Set the value of userId
      *
-     * @param int $userId The value of user_id
+     * @param int $userId The value of userId
      * @return void
      */
-    public function setUser_id(int $userId): void
+    public function setUserId(int $userId): void
     {
         $this->userId = $userId;
     }
