@@ -6,7 +6,6 @@ namespace App\Core;
 use App\Controllers\MainController;
 use App\Globals\GlobalsFactory;
 use App\Services\Session;
-use PHPMailer\PHPMailer\Exception;
 use Twig\Loader\FilesystemLoader;
 
 class Main

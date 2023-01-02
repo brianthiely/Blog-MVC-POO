@@ -14,7 +14,34 @@ class Session {
         if (!isset($_SESSION)) {
             session_start();
         }
+        if (self::isExpired()) {
+            self::destroy();
+        } else {
+            self::renew();
+        }
     }
+
+    /**
+     * Check if the session has expired
+     *
+     * @return bool
+     */
+    private static function isExpired(): bool
+    {
+        return isset($_SESSION['expiration']) && time() > $_SESSION['expiration'];
+    }
+
+    /**
+     * Renew the session
+     *
+     * @return void
+     */
+    private static function renew(): void
+    {
+        $_SESSION['id'] = uniqid();
+        $_SESSION['expiration'] = time() + 1800;
+    }
+
 
     /**
      * Set a session variable
