@@ -16,7 +16,7 @@ abstract class Controller
    protected Environment $twig;
    protected Globals $global;
 
-    public function __construct($loader)
+    public function __construct(FilesystemLoader $loader)
    {
         $this->loader = $loader;
         $this->twig = new Environment($this->loader);
