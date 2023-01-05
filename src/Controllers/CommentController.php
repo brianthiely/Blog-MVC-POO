@@ -25,7 +25,7 @@ class CommentController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $data = $form->getData();
-                $data['post_id'] = $postId;
+                $data['postId'] = $postId;
                 $comment = new Comment($data);
                 if (!isset($data['csrfToken']) || $data['csrfToken'] !== Session::get('user', 'csrfToken')) {
                     Flash::set('error', 'Something went wrong please try again');

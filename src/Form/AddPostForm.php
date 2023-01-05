@@ -96,7 +96,7 @@ class AddPostForm extends Form
             'author' => $global->getPost('author'),
             'chapo' => $global->getPost('chapo'),
             'content' => $contentClean,
-            'user_id' => Session::get('user', 'id'),
+            'userId' => Session::get('user', 'id'),
             'csrfToken' => $global->getPost('csrfToken'),
         ];
         return $this->data;

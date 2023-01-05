@@ -3,32 +3,45 @@
 {% block title %}Admin - Comments {% endblock %}
 
 {% block body %}
-    <table class="table table-striped mt-5">
-        <thead class="text-center">
-        <th>Post_id</th>
-        <th>User_id</th>
-        <th>Content</th>
-        <th>Actions</th>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                {% if posts is empty %}
+                <p>There are no comments to display.</p>
+                {% else %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Content</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comment in comments %}
+                            <tr>
+                                <th scope="row">{{ comment.id }}</th>
+                                <td>{{ comment.author }}</td>
+                                <td>{{ comment.content }}</td>
+                                <td>{{ comment.createdAt|date('d/m/Y') }}</td>
+                                <td class="d-flex">
+                                    <form action='/admin/validateComment/{{ comment.id}}' method="post" class="mx-2">
+                                        <input type="hidden" name="_token" value="{{ session.get('user', 'csrfToken') }}">
+                                        <button type="submit" class="btn btn-success">Validate</button>
+                                    </form>
 
-        </thead>
-        <tbody>
-        {% for comment in comments %}
-            {% if comment.visibility == 0 %}
-                <tr class="text-center">
-                    <td>{{ comment.post_id }}</td>
-                    <td>{{ comment.user_id }}</td>
-                    <td>{{ comment.content }}</td>
-
-                    <td class="d-flex">
-                        <form action='/admin/validateComment/{{ comment.id}}' method="post">
-                            <button type="submit" class="btn btn-success">Valid</button>
-                        </form>
-
-                        <form action="/admin/deleteComment/{{ comment.id}}" method="post">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            {% endif %}
-        {% endfor %}
+                                    <form action="/admin/deleteComment/{{ comment.id}}" method="post">
+                                        <input type="hidden" name="_token" value="{{ session.get('user', 'csrfToken') }}">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

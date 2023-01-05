@@ -154,18 +154,4 @@ abstract class Form
         $this->form_code .= $content . '</span>';
         return $this;
     }
-
-    /**
-     * Returns the value of a field
-     *
-     * @return array The value of a field
-     */
-    abstract public function getData(): array;
-
-    /**
-     * Verifies if the form is valid
-     *
-     * @return bool True if the form is valid, false otherwise
-     */
-    abstract public function isValid(): bool;
 }

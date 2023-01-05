@@ -36,4 +36,7 @@ class CommentRepository extends Repository
     {
         return $this->fetchBy(['visibility' => 0]);
     }
+
+
+
 }
