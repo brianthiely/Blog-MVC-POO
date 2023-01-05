@@ -11,7 +11,9 @@ class SignUpForm extends Form
     private array $errors = [];
 
     /**
-     * @return string
+     * Create a new form instance.
+     *
+     * @return string The form HTML.
      */
     public function createForm(): string
     {
@@ -74,6 +76,11 @@ class SignUpForm extends Form
         return $this->create();
     }
 
+    /**
+     * Validate the form.
+     *
+     * @return bool True if the form is valid, false otherwise.
+     */
     public function isValid(): bool
     {
         if (empty($this->getData()['firstname'])) {
@@ -104,7 +111,9 @@ class SignUpForm extends Form
     }
 
     /**
-     * @return bool
+     * Check if password confirmation is valid.
+     *
+     * @return bool True if the password confirmation is valid, false otherwise.
      */
     private function isPasswordConfirmValid(): bool
     {
@@ -113,7 +122,9 @@ class SignUpForm extends Form
     }
 
     /**
-     * @return bool
+     * Check if the password is valid.
+     *
+     * @return bool True if the password is valid, false otherwise.
      */
     private function isPasswordValid(): bool
     {
@@ -128,7 +139,9 @@ class SignUpForm extends Form
     }
 
     /**
-     * @return array
+     * Get the data from the form.
+     *
+     * @return array The data from the form.
      */
     public function getData(): array
     {
@@ -142,6 +155,11 @@ class SignUpForm extends Form
         ];
     }
 
+    /**
+     * Check if the email is valid.
+     *
+     * @return bool True if the email is valid, false otherwise.
+     */
     private function isEmailValid(): bool
     {
         if(empty($this->getData()['email'])) {

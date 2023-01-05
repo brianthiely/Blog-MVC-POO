@@ -5,6 +5,8 @@ namespace App\Services;
 
 class Session {
     /**
+     * Start the session
+     *
      * @return void
      */
     public static function start(): void
@@ -12,21 +14,52 @@ class Session {
         if (!isset($_SESSION)) {
             session_start();
         }
+        if (self::isExpired()) {
+            self::destroy();
+        } else {
+            self::renew();
+        }
     }
 
     /**
-     * @param $key
-     * @param $value
+     * Check if the session has expired
+     *
+     * @return bool
+     */
+    private static function isExpired(): bool
+    {
+        return isset($_SESSION['expiration']) && time() > $_SESSION['expiration'];
+    }
+
+    /**
+     * Renew the session
+     *
      * @return void
      */
-    public static function set($key, $value): void
+    private static function renew(): void
+    {
+        $_SESSION['id'] = uniqid();
+        $_SESSION['expiration'] = time() + 1800;
+    }
+
+
+    /**
+     * Set a session variable
+     *
+     * @param string $key The key of the session variable
+     * @param mixed $value
+     * @return void
+     */
+    public static function set(string $key, mixed $value): void
     {
         $_SESSION[$key] = $value;
     }
 
     /**
-     * @param string $key1
-     * @param string|null $key2
+     * Get a session variable
+     *
+     * @param string $key1 The key of the session variable
+     * @param string|null $key2 The key of the session variable
      * @return mixed
      */
     public static function get(string $key1, ?string $key2 = null): mixed {
@@ -68,6 +101,8 @@ class Session {
 
 
     /**
+     * Delete a session variable
+     *
      * @return void
      */
     public static function destroy(): void

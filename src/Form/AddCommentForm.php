@@ -11,9 +11,10 @@ class AddCommentForm extends Form
 {
     private array $errors = [];
 
-
     /**
-     * @return string
+     * Create a new form instance.
+     *
+     * @return string The form HTML
      */
     public function createForm(): string
     {
@@ -36,7 +37,10 @@ class AddCommentForm extends Form
     }
 
     /**
-     * @return array
+     * Get the form data.
+     *
+     *
+     * @return array The form data
      */
     public function getData(): array
     {
@@ -44,12 +48,17 @@ class AddCommentForm extends Form
         return [
             'content' => $globals->getPost('content'),
             'author' => Session::get('user', 'username'),
-            'user_id' => Session::get('user', 'id'),
+            'userId' => Session::get('user', 'id'),
             'visibility' => (Session::get('user', 'roles') === 'admin') ? 1 : 0,
             'csrfToken' => $globals->getPost('csrf_token'),
         ];
     }
 
+    /**
+     * Check if the form is valid.
+     *
+     * @return bool True if the form is valid, false otherwise
+     */
     public function isValid(): bool
     {
         if (empty($this->getData()['content'])) {
@@ -57,7 +66,4 @@ class AddCommentForm extends Form
         }
         return empty($this->errors);
     }
-
-
-
 }

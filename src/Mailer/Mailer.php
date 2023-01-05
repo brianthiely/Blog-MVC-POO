@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Mailer;
 
 use App\Globals\Globals;
@@ -29,6 +28,10 @@ class Mailer
     }
 
     /**
+     * Send an email
+     *
+     * @param array $data The data to send
+     * @return void
      * @throws Exception
      */
     public function send(array $data): void

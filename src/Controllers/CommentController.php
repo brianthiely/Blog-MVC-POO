@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Form\AddCommentForm;
@@ -12,14 +11,11 @@ use Exception;
 
 class CommentController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
-     * @param int $postId
-     * @return string
+     * Display form to add a comment
+     *
+     * @param int $postId Post ID
+     * @return string HTML
      * @throws Exception
      */
     public function addComment(int $postId): string
@@ -29,7 +25,7 @@ class CommentController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $data = $form->getData();
-                $data['post_id'] = $postId;
+                $data['postId'] = $postId;
                 $comment = new Comment($data);
                 if (!isset($data['csrfToken']) || $data['csrfToken'] !== Session::get('user', 'csrfToken')) {
                     Flash::set('error', 'Something went wrong please try again');

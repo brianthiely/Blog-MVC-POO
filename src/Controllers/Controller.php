@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Globals\Globals;
@@ -13,13 +12,13 @@ use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
 {
-   private FilesystemLoader $loader;
+   protected FilesystemLoader $loader;
    protected Environment $twig;
    protected Globals $global;
 
-    public function __construct()
+    public function __construct(FilesystemLoader $loader)
    {
-        $this->loader = New FilesystemLoader(ROOT . '/src/Views');
+        $this->loader = $loader;
         $this->twig = new Environment($this->loader);
         $this->twig->addGlobal('session', new Session());
         $this->twig->addGlobal('flash', new Flash());
@@ -27,7 +26,9 @@ abstract class Controller
    }
 
     /**
-     * @param string $page
+     * Redirect to a specific route
+     *
+     * @param string $page The route to redirect to
      * @return void
      */
    #[NoReturn] protected function redirect(string $page): void

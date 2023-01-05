@@ -11,7 +11,9 @@ class ContactForm extends Form
     private array $errors = [];
 
     /**
-     * @return string
+     * Create a new form instance.
+     *
+     * @return string The form HTML.
      */
     public function getForm(): string
     {
@@ -55,7 +57,11 @@ class ContactForm extends Form
         return $this->create();
     }
 
-
+    /**
+     * Check if the form is valid.
+     *
+     * @return bool True if the form is valid, false otherwise.
+     */
     public function isValid(): bool
     {
         $data = $this->getData();
@@ -87,7 +93,9 @@ class ContactForm extends Form
     }
 
     /**
-     * @return bool
+     * Check if the email is valid.
+     *
+     * @return bool True if the email is valid, false otherwise.
      */
     public function isEmailValid(): bool
     {
@@ -101,7 +109,9 @@ class ContactForm extends Form
     }
 
     /**
-     * @return bool
+     * Check if the phone is valid.
+     *
+     * @return bool True if the phone is valid, false otherwise.
      */
     public function isPhoneValid(): bool
     {
@@ -121,7 +131,9 @@ class ContactForm extends Form
     }
 
     /**
-     * @return array
+     * Get data from the form.
+     *
+     * @return array The data from the form.
      */
     public function getData(): array
     {

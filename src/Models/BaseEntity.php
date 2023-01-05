@@ -9,6 +9,10 @@ use Exception;
 class BaseEntity
 {
     /**
+     * Hydrate the entity with the given data
+     *
+     * @param array $data The data to hydrate the entity with
+     * @return void
      * @throws Exception
      */
     public function hydrate(array $data): void
@@ -24,10 +28,9 @@ class BaseEntity
         }
     }
 
-
-
-
     /**
+     * Get the entity as an array
+     *
      * @return array
      */
     public function getProperties(): array

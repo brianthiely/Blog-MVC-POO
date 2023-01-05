@@ -8,6 +8,8 @@ use Exception;
 class PostRepository extends Repository
 {
     /**
+     * Get all posts
+     *
      * @return array
      */
     public function getPosts(): array
@@ -16,6 +18,8 @@ class PostRepository extends Repository
     }
 
     /**
+     * Get post by id
+     *
      * @param int $id
      * @return mixed
      */
@@ -24,10 +28,14 @@ class PostRepository extends Repository
         return $this->fetch($id);
     }
 
-    public function deletePost(int $postId)
+    /**
+     * Delete post by id
+     *
+     * @param int $postId
+     * @return void
+     */
+    public function deletePost(int $postId): void
     {
         $this->delete($postId);
     }
-
-
 }

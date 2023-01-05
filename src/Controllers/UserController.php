@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Form\SignInForm;
@@ -17,9 +16,10 @@ use Twig\Error\SyntaxError;
 
 class UserController extends Controller
 {
-
     /**
-     * @return void
+     * Login user
+     *
+     * @return void Redirect to home page
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -70,7 +70,9 @@ class UserController extends Controller
 
 
     /**
-     * @return void
+     * Register user
+     *
+     * @return void Redirect to home page
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -106,7 +108,9 @@ class UserController extends Controller
 
 
     /**
-     * @return void
+     * Logout user
+     *
+     * @return void Redirect to home page
      */
     #[NoReturn] public function logout(): void
     {

@@ -9,11 +9,13 @@ use Exception;
 class UserRepository extends Repository
 {
     /**
-     * @param $email
-     * @return User|null
-     * @throws Exception
+     * Get user by email
+     *
+     * @param $email string The email to search for
+     * @return User|null The user or null if not found
+     * @throws Exception If the query fails
      */
-    public function getUserByEmail($email): ?User
+    public function getUserByEmail(string $email): ?User
     {
         $data = $this->fetchOneBy('email', $email);
         if ($data === false) {
@@ -23,7 +25,9 @@ class UserRepository extends Repository
     }
 
     /**
-     * @return array
+     * Get all users
+     *
+     * @return array The users
      */
     public function getUsers(): array
     {
