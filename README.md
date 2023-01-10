@@ -3,7 +3,11 @@
 ## Installation
 Pour installer ce projet, vous aurez besoin
 - d'un serveur web local (comme XAMPP ou WAMP)
-- une base de données MySQL. 
+- La base de données (disponible à la racine du projet).
+- Effectuer les commandes suivantes :
+- ```composer install```
+- ```composer dump-autoload```
+- ```composer update```
 
 Une fois le serveur en cours d'exécution, clonez ce dépôt GitHub sur votre ordinateur
 
